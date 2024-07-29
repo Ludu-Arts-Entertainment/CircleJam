@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
-  DevAccountEmail: development@luduarts.com
-  DevAccountToken: 7mes6imns87xzdqz3zzxz7aku348jxnghekypaq8cmr4zw916p3f7rm1km7pxzaqdm1u5g8jbp1r6qa9jkxmzrsxzqgiby8fokwtgqqk4k4cqyqt64ieezchd6p7dhn1eiq96su6ozyrs1zeteorqg1qdb7p4rgwoxee9t5883g5mafwdtuhoqxh1nuofx4pdptryspe
+  DevAccountEmail: 
+  DevAccountToken: 
   AadAuthorization: 
-  SelectedStudio: Ludu
-  SdkPath: Assets/PlayFabSDK
-  EdExPath: /Users/kursad/Workspace/Ludu/GameBase/Assets/ThirdPartyAssets/PlayFabEditorExtensions/Editor
+  SelectedStudio: 
+  SdkPath: 
+  EdExPath: 
   LocalCloudScriptPath: 
   PanelIsShown: 0
   curMainMenuIdx: 0
