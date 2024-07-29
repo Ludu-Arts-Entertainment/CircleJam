@@ -1,0 +1,76 @@
+{
+  "packages": [
+    {
+      "id": "FirebaseRemoteConfig",
+      "name": "com.google.firebase.remote-config",
+      "url": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.remote-config.git",
+      "version": "11.4.0",
+      "symbol": ["FirebaseRemoteConfig_Enabled"],
+      "requireIds": [
+        "ExternalDependencyManager",
+        "FirebaseApp"
+      ]
+    },
+    {
+      "id": "FirebaseCrashlytics",
+      "name": "com.google.firebase.crashlytics",
+      "url": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.crashlytics.git",
+      "version": "11.4.0",
+      "symbol": [],
+      "requireIds": [
+        "ExternalDependencyManager",
+        "FirebaseApp"
+      ]
+    },
+    {
+      "id": "FirebaseAnalytics",
+      "name": "com.google.firebase.analytics",
+      "url": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.analytics.git",
+      "version": "11.4.0",
+      "symbol": ["FirebaseAnalytics_Enabled"],
+      "requireIds": [
+        "ExternalDependencyManager",
+        "FirebaseApp"
+      ]
+    },
+    {
+      "id": "ExternalDependencyManager",
+      "name": "com.google.external-dependency-manager",
+      "url": "https://github.com/Ludu-Arts-Entertainment/com.ldk.external-dependency-manager.git",
+      "version": "1.2.177",
+      "symbol": [],
+      "requireIds": [
+      ]
+    },
+    {
+      "id": "FirebaseApp",
+      "name": "com.google.firebase.app",
+      "url": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.app.git",
+      "version": "11.4.0",
+      "symbol": [],
+      "requireIds": [
+        "ExternalDependencyManager"
+      ]
+    },
+    {
+      "id": "GameAnalytics",
+      "name": "com.ldk.gameanalytics",
+      "url": "https://github.com/Ludu-Arts-Entertainment/com.ldk.gameanalytics.git",
+      "version": "7.7.1",
+      "symbol": ["GameAnalytics_Enabled"],
+      "requireIds": [
+        "ExternalDependencyManager"
+      ]
+    },
+    {
+      "id": "AppLovinMax",
+      "name": "com.ldk.applovin",
+      "url": "https://github.com/Ludu-Arts-Entertainment/com.ldk.applovin.git",
+      "version": "5.11.5",
+      "symbol": ["MaxSdk_Enabled"],
+      "requireIds": [
+        "ExternalDependencyManager"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+CHEST_1.png
+size:258,562
+filter:Linear,Linear
+pma:true
+CHEST_BASE
+bounds:2,2,190,123
+rotate:90
+CHEST_LID_CLOSED
+bounds:2,294,205,115
+CHEST_LID_HALF_OPEN
+bounds:2,194,204,98
+CHEST_LID_OPEN
+bounds:127,13,179,129
+offsets:0,0,180,129
+rotate:90
+Layer 1 copy 4
+bounds:2,411,240,149
+offsets:0,3,242,156

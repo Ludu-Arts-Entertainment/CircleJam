@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
+  m_Name: PlayFabEditorPrefsSO
+  m_EditorClassIdentifier: 
+  DevAccountEmail: development@luduarts.com
+  DevAccountToken: 7mes6imns87xzdqz3zzxz7aku348jxnghekypaq8cmr4zw916p3f7rm1km7pxzaqdm1u5g8jbp1r6qa9jkxmzrsxzqgiby8fokwtgqqk4k4cqyqt64ieezchd6p7dhn1eiq96su6ozyrs1zeteorqg1qdb7p4rgwoxee9t5883g5mafwdtuhoqxh1nuofx4pdptryspe
+  AadAuthorization: 
+  SelectedStudio: Ludu
+  SdkPath: Assets/PlayFabSDK
+  EdExPath: /Users/kursad/Workspace/Ludu/GameBase/Assets/ThirdPartyAssets/PlayFabEditorExtensions/Editor
+  LocalCloudScriptPath: 
+  PanelIsShown: 0
+  curMainMenuIdx: 0
+  curSubMenuIdx: 0

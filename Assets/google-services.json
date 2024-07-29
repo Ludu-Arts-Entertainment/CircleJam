@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "487290630338",
+    "project_id": "gamebase-fce3c",
+    "storage_bucket": "gamebase-fce3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487290630338:android:40b48f6a2df0af871b4b5b",
+        "android_client_info": {
+          "package_name": "com.dgb.gamebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuHQVlgRpMuyZoV3oiMLSYK0mOWWssDB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

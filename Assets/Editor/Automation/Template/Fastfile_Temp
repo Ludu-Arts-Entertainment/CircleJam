@@ -1,0 +1,110 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+lane :disable_bitcode do
+  project_path = "../Unity-iPhone.xcodeproj"  # Replace with the actual path to your Xcode project
+
+  require 'xcodeproj'
+
+  project = Xcodeproj::Project.open(project_path)
+
+  project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+
+  project.save
+
+  puts "Bitcode disabled successfully."
+end
+
+platform :ios do
+  desc "Update code signing settings"
+  lane :update_code_signing do
+    update_code_signing_settings(
+      targets: "Unity-iPhone",
+      code_sign_identity: "SIGNIDENTITY",
+      profile_name: "DIST",
+      profile_uuid: "PROFILEUUID"
+    )
+    update_code_signing_settings(
+      targets: "Unity-iPhone Tests",
+      use_automatic_signing: true,
+      team_id: "TEAMID"
+    )
+  end
+puts"Starting Fastlane Test"
+  desc "Push a new test build to TestFlight"
+  lane :test do
+      api_key=app_store_connect_api_key(
+        key_id: "KEYID",
+        issuer_id: "ISSUER",
+        key_filepath: "~ludu/Documents/AUTHPATH",
+        duration: 200,
+        in_house: false,
+      )
+      
+    puts "Building..."
+    
+    build_app(
+      workspace: "Unity-iPhone.xcworkspace", 
+      scheme: "Unity-iPhone",
+      export_options: {
+        method: "app-store",
+        teamID: "TEAMID",
+        manageAppVersionAndBuildNumber: true,
+        provisioningProfiles: {
+          "BUNDLE" => "DIST"
+        },
+        stripSwiftSymbols: true,
+        uploadSymbols: true,
+        compileBitcode: false,
+        exportProvisioningProfiles: true,
+        include_bitcode: false
+      },
+      # export_options_path: "../../ExportOptions.plist"
+    )
+    puts "Build done and trying to upload to TestFlight..."
+   
+    upload_to_testflight(skip_submission: true, skip_waiting_for_build_processing: true, uses_non_exempt_encryption: true, api_key: api_key)
+  end
+  
+  desc "Push a new release build to App Store"
+  lane :release do
+        puts"Realease"
+       
+      app_store_connect_api_key(
+        key_id: "KEYID",
+        issuer_id: "ISSUER",
+        key_filepath: "~ludu/Documents/AUTHPATH",
+        duration: 200,
+        in_house: false,
+      )
+      
+     deliver(
+      build_number: latest_testflight_build_number,
+      submit_for_review: false,
+      force: true, # Skip HTMl report verification
+      # Comes from https://github.com/fastlane/fastlane/issues/5542#issuecomment-254201994
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false,
+      }
+    )
+  end
+end

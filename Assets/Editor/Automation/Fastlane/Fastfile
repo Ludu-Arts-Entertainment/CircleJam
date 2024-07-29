@@ -1,0 +1,107 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+lane :disable_bitcode do
+  project_path = "../Unity-iPhone.xcodeproj"  # Replace with the actual path to your Xcode project
+
+  require 'xcodeproj'
+
+  project = Xcodeproj::Project.open(project_path)
+
+  project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+
+  project.save
+
+  puts "Bitcode disabled successfully."
+end
+
+platform :ios do
+  desc "Update code signing settings"
+  lane :update_code_signing do
+    update_code_signing_settings(
+      targets: "Unity-iPhone",
+      code_sign_identity: "Apple Distribution: LUDU ARTS TEKNOLOJI ANONIM SIRKETI (K2J97CSWZP)",
+      profile_name: "HolyDefense-Dist",
+      profile_uuid: "7c49df4e-116e-4d01-ab68-4d2d06e696b5"
+    )
+    update_code_signing_settings(
+      targets: "Unity-iPhone Tests",
+      use_automatic_signing: true,
+      team_id: "K2J97CSWZP"
+    )
+  end
+puts"Starting Fastlane Test"
+  desc "Push a new test build to TestFlight"
+  lane :test do
+      api_key=app_store_connect_api_key(
+        key_id: "BZU9U428V6",
+        issuer_id: "84c971ba-af7c-4687-ab45-0ac5a979ed33",
+        key_filepath: "~ludu/Documents/AuthKey_BZU9U428V6.p8",
+        duration: 200,
+        in_house: false,
+      )
+      
+    puts "Building..."
+    build_app(
+      workspace: "Unity-iPhone.xcworkspace", 
+      scheme: "Unity-iPhone",
+      export_options: {
+        method: "app-store",
+        teamID: "K2J97CSWZP",
+        manageAppVersionAndBuildNumber: true,
+        provisioningProfiles: {
+          "com.ludu.holydefence" => "HolyDefense-Dist"
+        },
+        stripSwiftSymbols: true,
+        uploadSymbols: true,
+        compileBitcode: false,
+        exportProvisioningProfiles: true,
+        include_bitcode: false
+      },
+      # export_options_path: "../../ExportOptions.plist"
+    )
+    puts "Build done and trying to upload to TestFlight..."
+    upload_to_testflight(skip_submission: true, uses_non_exempt_encryption: true, skip_waiting_for_build_processing: true,api_key: api_key)
+  end
+  
+  desc "Push a new release build to App Store"
+  lane :release do
+        puts"Release"
+       
+      app_store_connect_api_key(
+        key_id: "BZU9U428V6",
+        issuer_id: "84c971ba-af7c-4687-ab45-0ac5a979ed33",
+        key_filepath: "~ludu/Documents/AuthKey_BZU9U428V6.p8",
+        duration: 200,
+        in_house: false,
+      )
+  
+    deliver(
+      submit_for_review: false,
+      force: true, # Skip HTMl report verification
+      # Comes from https://github.com/fastlane/fastlane/issues/5542#issuecomment-254201994
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false,
+      }
+    )
+  end
+end
