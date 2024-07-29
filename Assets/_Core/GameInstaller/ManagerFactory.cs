@@ -29,7 +29,8 @@ public enum ManagerEnums
     RouletteManager,
     DailyOfferManager,
     FriendManager,
-    MailManager
+    MailManager,
+    GridManager,
 }
 
 public class ManagerFactory
@@ -120,6 +121,9 @@ public class ManagerFactory
 #endif
 #if MailManager_Enabled
             { ManagerEnums.MailManager, new MailManager() },
+#endif
+#if GridManager_Enabled
+            { ManagerEnums.GridManager, new GridManager() },
 #endif
         };
 
