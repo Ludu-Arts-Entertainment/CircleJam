@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498e6afb6c8094f078cf08afd7be175c, type: 3}
+  m_Name: LocalConfigData
+  m_EditorClassIdentifier: 
+  ListOfConfigs:
+  - rid: 3271655178799153152
+  - rid: 3271655178799153160
+  - rid: 3271655178799153162
+  references:
+    version: 2
+    RefIds:
+    - rid: 3271655178799153152
+      type: {class: AdConfig, ns: , asm: Assembly-CSharp}
+      data:
+        InterstitialAdEnabled: 1
+        RewardedAdEnabled: 1
+        BannerAdEnabled: 1
+        InterstitialInterval: 30
+        RewardedAdCooldown: 30
+        FirstInterstitialAdDelay: 30
+        FirstInterstitialLevel: 1
+        GameOpenInterstitialAdDelay: 30
+    - rid: 3271655178799153160
+      type: {class: TutorialConfig, ns: , asm: Assembly-CSharp}
+      data:
+        IsTutorialActive: 0
+    - rid: 3271655178799153162
+      type: {class: MailConfig, ns: , asm: Assembly-CSharp}
+      data:
+        DailyGiftConfig:
+          Amount: -1
+          ExpireTime: 86400
+          SendInterval: 86400
+          Title: 0 sent a surprise gift for you!
+          Message: You have received a daily 22222
+          Products:
+          - type: 0
+            subType: 2
+            amount: 10

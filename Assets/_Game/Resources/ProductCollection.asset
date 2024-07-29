@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28348c9afaa6fcc4bb51001e9ccdfa57, type: 3}
+  m_Name: ProductCollection
+  m_EditorClassIdentifier: 
+  ProductCollections:
+  - productStoreType: 3
+    Name: NoAds
+    Description: NoAds Desc
+    ListOfProductBlocks:
+    - id: no_ads
+      name: NO ADS
+      description: REMOVE ADS
+      isAvailable: 1
+      priceType: 0
+      priceBlock:
+        Amount: 6.99
+        AmountString: USD
+        Currency: 2
+      listOfProductBlocks:
+      - type: 3
+        subType: 3
+        amount: 1
+      - type: 0
+        subType: 1
+        amount: 150
+      icon: {fileID: 21300000, guid: 01817657ea7b246d7a32e0df3e777ed1, type: 3}
+      availableCount: 1
+      availableTime: 0
+  - productStoreType: 1
+    Name: Currency
+    Description: Currency Desc
+    ListOfProductBlocks:
+    - id: gem_3
+      name: 3 Gems
+      description: FREE
+      isAvailable: 1
+      priceType: 2
+      priceBlock:
+        Amount: 1
+        AmountString: 
+        Currency: 3
+      listOfProductBlocks:
+      - type: 0
+        subType: 1
+        amount: 3
+      icon: {fileID: 21300000, guid: 2d51e8abe03a50c49814e734077490c3, type: 3}
+      availableCount: 1
+      availableTime: 21600
+    - id: gem_25
+      name: Stack of gems
+      description: Buy 25 gems
+      isAvailable: 1
+      priceType: 0
+      priceBlock:
+        Amount: 1.99
+        AmountString: $
+        Currency: 2
+      listOfProductBlocks:
+      - type: 0
+        subType: 2
+        amount: 25
+      icon: {fileID: 21300000, guid: 8dc171f5ae2600a478921f3000c701ba, type: 3}
+      availableCount: -1
+      availableTime: -1
+    - id: coin_10k
+      name: Bag of coin
+      description: Buy 10k gems
+      isAvailable: 1
+      priceType: 1
+      priceBlock:
+        Amount: 1
+        AmountString: 
+        Currency: 1
+      listOfProductBlocks:
+      - type: 0
+        subType: 2
+        amount: 3.4028235e+38
+      icon: {fileID: -631514776, guid: e519baf580ad74f10b231beaa3019202, type: 3}
+      availableCount: -1
+      availableTime: -1

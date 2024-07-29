@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7aae55a3e34c828f70ed69ee0b7c8c, type: 3}
+  m_Name: DailyLoginRewardContainer
+  m_EditorClassIdentifier: 
+  DailyLoginRewards:
+  - Metadata:
+      Title: Day 1
+      Description: 
+    ProductBlocks:
+    - type: 0
+      subType: 2
+      amount: 5
+  - Metadata:
+      Title: Day 2
+      Description: 
+    ProductBlocks:
+    - type: 0
+      subType: 2
+      amount: 5
+  - Metadata:
+      Title: Day 3
+      Description: 
+    ProductBlocks:
+    - type: 0
+      subType: 2
+      amount: 5
+  - Metadata:
+      Title: Day 4
+      Description: 
+    ProductBlocks:
+    - type: 0
+      subType: 2
+      amount: 5
+  - Metadata:
+      Title: Day 5
+      Description: 
+    ProductBlocks:
+    - type: 0
+      subType: 2
+      amount: 5
+  - Metadata:
+      Title: Day 6
+      Description: 
+    ProductBlocks:
+    - type: 0
+      subType: 2
+      amount: 5
+  - Metadata:
+      Title: Day 7
+      Description: 
+    ProductBlocks:
+    - type: 0
+      subType: 2
+      amount: 5

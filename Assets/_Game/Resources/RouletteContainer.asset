@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3bfae99b97e46d79b3180459f3f7b0, type: 3}
+  m_Name: RouletteContainer
+  m_EditorClassIdentifier: 
+  RouletteElementCount: 3
+  RouletteDatas:
+  - Id: 1
+    ProductBlockType: 0
+    ProductBlockSubType: 2
+    MinAmount: 5
+    MaxAmount: 10
+  - Id: 2
+    ProductBlockType: 0
+    ProductBlockSubType: 1
+    MinAmount: 2
+    MaxAmount: 5
+  - Id: 3
+    ProductBlockType: 0
+    ProductBlockSubType: 2
+    MinAmount: 7
+    MaxAmount: 12
