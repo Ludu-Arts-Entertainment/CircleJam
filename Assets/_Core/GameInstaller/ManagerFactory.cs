@@ -31,6 +31,7 @@ public enum ManagerEnums
     FriendManager,
     MailManager,
     GridManager,
+    MovementManager,
 }
 
 public class ManagerFactory
@@ -124,6 +125,9 @@ public class ManagerFactory
 #endif
 #if GridManager_Enabled
             { ManagerEnums.GridManager, new GridManager() },
+#endif
+#if MovementManager_Enabled
+            { ManagerEnums.MovementManager, new MovementManager() },
 #endif
         };
 
