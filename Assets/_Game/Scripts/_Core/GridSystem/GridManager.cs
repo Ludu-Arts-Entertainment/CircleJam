@@ -21,4 +21,9 @@ public class GridManager : IManager
     {
         return _gridProvider != null;
     }
+
+    public void CreateGrid(int circleCount, Transform parent)
+    {
+        _gridProvider.CreateGrid(circleCount, parent);
+    }
 }

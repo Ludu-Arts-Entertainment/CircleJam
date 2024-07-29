@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
 
     private void OnGameReadyToStart(Events.OnGameReadyToStart obj)
     {
-        GameInstaller.Instance.SystemLocator.UIManager.Show(UITypes.IntroPanel, null);
+        //GameInstaller.Instance.SystemLocator.UIManager.Show(UITypes.IntroPanel, null);
+        GameInstaller.Instance.SystemLocator.LevelManager.LoadLevel();
     }
 
     private void OnAskDataSyncSourceEvent(Events.AskDataSyncSourceEvent obj)

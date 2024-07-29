@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade73431de592764a934417a636f03a0, type: 3}
+  m_Name: GridSystem_PoolContainer
+  m_EditorClassIdentifier: 
+  PoolData:
+  - Id: GridLevel_1
+    Prefab: {fileID: 8548326962662072075, guid: daa7be0701a544059a040928c1b68513, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: GridLevel_2
+    Prefab: {fileID: 8221368008951358706, guid: 62a886cc5de714412bf6d373811adb51, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: GridLevel_3
+    Prefab: {fileID: 8713998415406382611, guid: b41edffbbe5f6468d9dd7f54a3826d95, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: GridLevel_4
+    Prefab: {fileID: 1885651449874624346, guid: 402126d327976446e8cde2ecf45fa075, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: ExitDoor
+    Prefab: {fileID: 7710048092648277902, guid: 08da26287946d41e598917df273b52d0, type: 3}
+    InitialCount: 0
+    Tag: 0
