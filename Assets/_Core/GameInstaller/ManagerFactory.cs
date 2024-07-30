@@ -32,6 +32,7 @@ public enum ManagerEnums
     MailManager,
     GridManager,
     MovementManager,
+    GoalManager,
 }
 
 public class ManagerFactory
@@ -128,6 +129,9 @@ public class ManagerFactory
 #endif
 #if MovementManager_Enabled
             { ManagerEnums.MovementManager, new MovementManager() },
+#endif
+#if GoalManager_Enabled
+            { ManagerEnums.GoalManager, new GoalManager() },
 #endif
         };
 
