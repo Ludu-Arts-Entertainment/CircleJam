@@ -64,7 +64,6 @@ public class CircleJamGridProvider : IGridProvider
         {
             foreach (var grid in circleGrid.Value)
             {
-                Debug.Log($"Destroyed pool id: GridLevel_{i+1}");
                 GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"GridLevel_{i+1}", grid);
             }
             i++;
