@@ -9,5 +9,13 @@ public partial class Events
             LevelIndex = levelIndex;
         }
     }
+
+    public struct OnLevelStopped : IEvent
+    {
+    }
+
+    public struct OnLevelContiuned : IEvent
+    {
+    }
 }
 #endif

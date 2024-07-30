@@ -56,7 +56,7 @@ public class BasicUIProvider : IUIProvider
             canvas.name = $"{_uiBases[i - 1]}Canvas";
             canvas.GetComponent<Canvas>().sortingOrder = i * 50;
             canvas.GetComponent<Canvas>().worldCamera = Camera.main;
-            canvas.GetComponent<Canvas>().planeDistance = 50;
+            canvas.GetComponent<Canvas>().planeDistance = 6;
             _uiCanvasDict.Add(_uiBases[i - 1], canvas.transform);
         }
 
