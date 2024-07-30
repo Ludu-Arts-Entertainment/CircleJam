@@ -8,4 +8,5 @@ public interface IGridProvider
     void CreateGrid(int circleCount, Transform parent);
     void RotateCircle(int circleIdx, float angle);
     void StopRotateCircle(int circleIdx);
+    void ResetGrid();
 }

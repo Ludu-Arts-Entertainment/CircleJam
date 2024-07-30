@@ -62,4 +62,9 @@ public class CircleJamGridProvider : IGridProvider
         var angle = (360 / ONE_CIRCLE_GRID_COUNT);
         _circleGridsParentById[circleIdx].rotation = Quaternion.Euler(0, Mathf.Round(_circleGridsParentById[circleIdx].eulerAngles.y / angle) * angle, 0);
     }
+
+    public void ResetGrid()
+    {
+        
+    }
 }

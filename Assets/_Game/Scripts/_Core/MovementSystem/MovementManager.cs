@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovementManager : IManager
 {
+    public int MovementCount => _movementProvider.MovementCount;
     private IMovementProvider _movementProvider;
     public IManager CreateSelf()
     {

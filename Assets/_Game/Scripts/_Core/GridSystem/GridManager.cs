@@ -36,4 +36,9 @@ public class GridManager : IManager
     {
         _gridProvider.StopRotateCircle(circleIdx);
     }
+
+    public void ResetGrid()
+    {
+        _gridProvider.ResetGrid();
+    }
 }

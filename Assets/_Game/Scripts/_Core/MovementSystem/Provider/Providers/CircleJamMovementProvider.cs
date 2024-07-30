@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CircleJamMovementProvider : IMovementProvider
 {
+    public int MovementCount => currentMoveCount;
     private int currentMoveCount;
     private int totalMoveCount;
 
@@ -30,6 +31,8 @@ public class CircleJamMovementProvider : IMovementProvider
         //Sonrasında datadan alınacak
         totalMoveCount = 10;
         currentMoveCount = 10;
+
+        GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.MoveCountUpdated(currentMoveCount));
         _isLevelStopped = false;
     }
 
@@ -48,7 +51,7 @@ public class CircleJamMovementProvider : IMovementProvider
     private async void OnPointerDown(object sender, PointerDownEventArgs e)
     {
         if(_isLevelStopped) return;
-        
+
         Ray ray = Camera.main.ScreenPointToRay(e.ScreenPosition);
         bool hasHit = Physics.Raycast(ray, out RaycastHit hit);
 
