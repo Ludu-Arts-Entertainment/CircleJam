@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: environment_atlas
+    second: {fileID: 2100000, guid: ddb5af846757b934fbdbf1b4e91f1fc1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: lambert1
     second: {fileID: 2100000, guid: ddb5af846757b934fbdbf1b4e91f1fc1, type: 2}
   materials:
