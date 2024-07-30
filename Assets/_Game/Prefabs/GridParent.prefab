@@ -342,6 +342,7 @@ MonoBehaviour:
   - {fileID: 5757231871688977207}
   - {fileID: 774024510611560108}
   - {fileID: 4587075110270221176}
+  doorTransform: {fileID: 113578555595690926}
 --- !u!1 &8623715184082410147
 GameObject:
   m_ObjectHideFlags: 0

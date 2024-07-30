@@ -37,3 +37,7 @@ MonoBehaviour:
     Prefab: {fileID: 8595294534884273227, guid: df4b98ceab8bd4ebaaea0fb0592cf77c, type: 3}
     InitialCount: 0
     Tag: 0
+  - Id: Character
+    Prefab: {fileID: 4762284917463365626, guid: d01d73d89d7e44f1b8c1d1f8cb626bac, type: 3}
+    InitialCount: 0
+    Tag: 0

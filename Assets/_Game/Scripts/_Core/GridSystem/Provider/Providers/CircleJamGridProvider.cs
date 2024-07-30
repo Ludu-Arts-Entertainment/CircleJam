@@ -39,6 +39,11 @@ public class CircleJamGridProvider : IGridProvider
                 grid.transform.localPosition = Vector3.zero;
                 grid.transform.localRotation = Quaternion.Euler(0, j * (360 / ONE_CIRCLE_GRID_COUNT), 0);
                 _circleGridsByParent[gridParent.transform].Add(grid);
+
+                if(i == 0 && j == 0 || i == 1 && j == 4 || i == 2 && j == 8 || i == 3 && j == 2)
+                {
+                    grid.CreateCharacter(GoalColors.Red, gridParentObject.DoorTransform);
+                }
             }
         }
     }
