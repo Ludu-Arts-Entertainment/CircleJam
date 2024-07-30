@@ -66,7 +66,10 @@ public class PrefabBaseLevelProvider : ILevelProvider
     public void DisposeLevel()
     {
         if (CurrentLevelData == null) return;
+        
+        GameInstaller.Instance.SystemLocator.GridManager.ResetGrid();
         GameInstaller.Instance.SystemLocator.PoolManager.Destroy(((PrefabBaseLevelData)CurrentLevelData).PrefabPoolId, _levelController);
+
         CurrentLevelData = null;
         _levelController = null;
     }
