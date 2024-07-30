@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ public class CircleJamGridProvider : IGridProvider
 {
     private const int ONE_CIRCLE_GRID_COUNT = 12;
 
-    private Dictionary<Transform, List<Transform>> _circleGridsByParent = new ();
+    private Dictionary<Transform, List<GridNode>> _circleGridsByParent = new ();
     private Dictionary<int, Transform> _circleGridsParentById = new ();
     public IGridProvider CreateSelf()
     {
@@ -19,23 +18,18 @@ public class CircleJamGridProvider : IGridProvider
         onReady?.Invoke();
     }
 
+    private GridParent gridParentObject;
     public void CreateGrid(int circleCount, Transform parent)
     {
-        /* TODO: Reset Grid Function*/
-        _circleGridsByParent.Clear();   
-        _circleGridsParentById.Clear();
-
-        var exitDoor = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>("ExitDoor", parent: parent);
-        exitDoor.transform.localPosition = Vector3.zero;
-        exitDoor.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        if(gridParentObject == null)
+        {
+            gridParentObject = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridParent>("GridParent", parent: parent);
+        }
 
         for (int i = 0; i < circleCount; i++)
         {
-            var gridParent = new GameObject("CircleGrid_" + i);
-            gridParent.transform.SetParent(parent);
-            gridParent.transform.localPosition = Vector3.zero;
-
-            _circleGridsByParent.Add(gridParent.transform, new List<Transform>());
+            var gridParent = gridParentObject.GridCircleParents[i];
+            _circleGridsByParent.Add(gridParent.transform, new List<GridNode>());
             _circleGridsParentById.Add(i, gridParent.transform);
 
             for (int j = 0; j < ONE_CIRCLE_GRID_COUNT; j++)
@@ -44,7 +38,7 @@ public class CircleJamGridProvider : IGridProvider
                 grid.Initialize(i);
                 grid.transform.localPosition = Vector3.zero;
                 grid.transform.localRotation = Quaternion.Euler(0, j * (360 / ONE_CIRCLE_GRID_COUNT), 0);
-                _circleGridsByParent[gridParent.transform].Add(grid.transform);
+                _circleGridsByParent[gridParent.transform].Add(grid);
             }
         }
     }
@@ -65,6 +59,18 @@ public class CircleJamGridProvider : IGridProvider
 
     public void ResetGrid()
     {
-        
+        int i = 0;
+        foreach (var circleGrid in _circleGridsByParent)
+        {
+            foreach (var grid in circleGrid.Value)
+            {
+                Debug.Log($"Destroyed pool id: GridLevel_{i+1}");
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"GridLevel_{i+1}", grid);
+            }
+            i++;
+        }
+
+        _circleGridsByParent.Clear();   
+        _circleGridsParentById.Clear();
     }
 }
