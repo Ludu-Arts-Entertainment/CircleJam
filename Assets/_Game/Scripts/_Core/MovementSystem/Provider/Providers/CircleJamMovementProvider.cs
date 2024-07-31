@@ -46,14 +46,14 @@ public class CircleJamMovementProvider : IMovementProvider
         _isLevelStopped = true;
     }
 
-   private Vector3 initialDirection;
+    private Vector3 initialDirection;
     private GridNode _selectedGridNode;
     private async void OnPointerDown(object sender, PointerDownEventArgs e)
     {
         if(_isLevelStopped) return;
 
         Ray ray = Camera.main.ScreenPointToRay(e.ScreenPosition);
-        bool hasHit = Physics.Raycast(ray, out RaycastHit hit);
+        bool hasHit = Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity);
 
         totalAngle = 0;
 
@@ -64,10 +64,27 @@ public class CircleJamMovementProvider : IMovementProvider
                 _selectedGridNode = gridNode;
                 initialDirection = (hit.point - gridNode.transform.position).normalized;
 
+                GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(gridNode.GridLevel);
+
                 await UniTask.Delay(20);
+
                 GameInstaller.Instance.SystemLocator.InputManager.PointerDrag += OnPointerDrag;
                 GameInstaller.Instance.SystemLocator.InputManager.PointerUp += OnPointerUp;
             }
+            else if(hit.collider.TryGetComponent(out CharacterController characterController))
+            {
+                _selectedGridNode = characterController.CurrentGridNode;
+                initialDirection = (hit.point - _selectedGridNode.transform.position).normalized;
+
+                GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(gridNode.GridLevel);
+
+                await UniTask.Delay(20);
+                
+                GameInstaller.Instance.SystemLocator.InputManager.PointerDrag += OnPointerDrag;
+                GameInstaller.Instance.SystemLocator.InputManager.PointerUp += OnPointerUp;
+            }
+
+            GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.DragStarted());
         }
     }
 
@@ -75,10 +92,11 @@ public class CircleJamMovementProvider : IMovementProvider
     private void OnPointerDrag(object sender, PointerDragEventArgs e)
     {
         Ray ray = Camera.main.ScreenPointToRay(e.ScreenPosition);
-        bool hasHit = Physics.Raycast(ray, out RaycastHit hit);
+        bool hasHit = Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity);
+
         if(!hasHit) return;
-        
-        Vector3 currentDirection = (hit.point - _selectedGridNode.transform.position).normalized;
+
+        Vector3 currentDirection = (hit.point - _selectedGridNode.GetPosition()).normalized;
         var angle = Vector3.SignedAngle(initialDirection, currentDirection, Vector3.up);
         totalAngle += angle;
         GameInstaller.Instance.SystemLocator.GridManager.RotateCircle(_selectedGridNode.GridLevel, angle);
@@ -98,6 +116,8 @@ public class CircleJamMovementProvider : IMovementProvider
             GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.MoveCountUpdated(currentMoveCount));
             CheckFail();
         }
+
+        GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.DragStopped());
 
         GameInstaller.Instance.SystemLocator.InputManager.PointerDrag -= OnPointerDrag;
         GameInstaller.Instance.SystemLocator.InputManager.PointerUp -= OnPointerUp;
@@ -123,5 +143,13 @@ public partial class Events
         {
             CurrentMoveCount = currentMoveCount;
         }
+    }
+
+    public struct DragStarted : IEvent
+    {
+    }
+
+    public struct DragStopped : IEvent
+    {
     }
 }

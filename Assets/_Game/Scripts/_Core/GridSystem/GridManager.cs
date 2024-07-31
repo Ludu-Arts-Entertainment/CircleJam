@@ -25,6 +25,11 @@ public class GridManager : IManager
         _gridProvider.CreateGrid(circleCount, parent);
     }
 
+    public void StartRotateCircle(int circleIdx)
+    {
+        _gridProvider.StartRotateCircle(circleIdx);
+    }
+    
     public void RotateCircle(int circleIdx, float angle)
     {
         _gridProvider.RotateCircle(circleIdx, angle);

@@ -79,6 +79,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collider: {fileID: 8214254643730642994}
+  meshRenderer: {fileID: 5431052950330305344}
+  normalEmisionColor: {r: 0, g: 0, b: 0, a: 1}
+  selectedEmisionColor: {r: 0.69803923, g: 0.69803923, b: 0.69803923, a: 1}
 --- !u!64 &8214254643730642994
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -149,15 +152,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8416493975854215893, guid: 266bf17bb567c402ba37151c636a8780, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 266bf17bb567c402ba37151c636a8780, type: 3}
       propertyPath: m_Name
       value: circle_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 266bf17bb567c402ba37151c636a8780, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 266bf17bb567c402ba37151c636a8780, type: 3}
+--- !u!23 &5431052950330305344 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5271501088642688296, guid: 266bf17bb567c402ba37151c636a8780, type: 3}
+  m_PrefabInstance: {fileID: 9045801263951278488}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8792043726372673139 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 266bf17bb567c402ba37151c636a8780, type: 3}

@@ -55,11 +55,25 @@ public class CircleJamGridProvider : IGridProvider
         _circleGridsParentById[circleIdx].Rotate(Vector3.up, angle, Space.World);
     }
 
+    public void StartRotateCircle(int circleIdx)
+    {
+        if(!_circleGridsParentById.ContainsKey(circleIdx)) return;
+        foreach (var grid in _circleGridsByParent[_circleGridsParentById[circleIdx]])
+        {
+            grid.SetSelectedColor(true);
+        }
+    }
+
     public void StopRotateCircle(int circleIdx)
     {
         if(!_circleGridsParentById.ContainsKey(circleIdx)) return;
         var angle = (360 / ONE_CIRCLE_GRID_COUNT);
         _circleGridsParentById[circleIdx].rotation = Quaternion.Euler(0, Mathf.Round(_circleGridsParentById[circleIdx].eulerAngles.y / angle) * angle, 0);
+
+        foreach (var grid in _circleGridsByParent[_circleGridsParentById[circleIdx]])
+        {
+            grid.SetSelectedColor(false);
+        }
     }
 
     public void ResetGrid()
