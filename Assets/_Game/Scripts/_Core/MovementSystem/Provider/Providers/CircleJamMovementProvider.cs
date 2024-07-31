@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class CircleJamMovementProvider : IMovementProvider
 {
@@ -48,9 +49,12 @@ public class CircleJamMovementProvider : IMovementProvider
 
     private Vector3 initialDirection;
     private GridNode _selectedGridNode;
+    private CharacterController _selectedCharacter;
     private async void OnPointerDown(object sender, PointerDownEventArgs e)
     {
         if(_isLevelStopped) return;
+
+        _selectedCharacter = null;
 
         Ray ray = Camera.main.ScreenPointToRay(e.ScreenPosition);
         bool hasHit = Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity);
@@ -61,8 +65,9 @@ public class CircleJamMovementProvider : IMovementProvider
         {
             if(hit.collider.TryGetComponent(out GridNode gridNode))
             {
+                Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
                 _selectedGridNode = gridNode;
-                initialDirection = (hit.point - gridNode.transform.position).normalized;
+                initialDirection = (hitPoint.point - gridNode.transform.position).normalized;
 
                 GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(gridNode.GridLevel);
 
@@ -71,15 +76,17 @@ public class CircleJamMovementProvider : IMovementProvider
                 GameInstaller.Instance.SystemLocator.InputManager.PointerDrag += OnPointerDrag;
                 GameInstaller.Instance.SystemLocator.InputManager.PointerUp += OnPointerUp;
             }
-            else if(hit.collider.TryGetComponent(out CharacterController characterController))
+            else if(hit.collider.TryGetComponent(out CharacterController character))
             {
-                _selectedGridNode = characterController.CurrentGridNode;
-                initialDirection = (hit.point - _selectedGridNode.transform.position).normalized;
+                _selectedCharacter = character;
+                Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
+                _selectedGridNode = character.CurrentGridNode;
+                initialDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
 
-                GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(gridNode.GridLevel);
+                GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(character.CurrentGridNode.GridLevel);
 
                 await UniTask.Delay(20);
-                
+
                 GameInstaller.Instance.SystemLocator.InputManager.PointerDrag += OnPointerDrag;
                 GameInstaller.Instance.SystemLocator.InputManager.PointerUp += OnPointerUp;
             }
@@ -92,11 +99,11 @@ public class CircleJamMovementProvider : IMovementProvider
     private void OnPointerDrag(object sender, PointerDragEventArgs e)
     {
         Ray ray = Camera.main.ScreenPointToRay(e.ScreenPosition);
-        bool hasHit = Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity);
+        bool hasHit = Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
 
         if(!hasHit) return;
 
-        Vector3 currentDirection = (hit.point - _selectedGridNode.GetPosition()).normalized;
+        Vector3 currentDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
         var angle = Vector3.SignedAngle(initialDirection, currentDirection, Vector3.up);
         totalAngle += angle;
         GameInstaller.Instance.SystemLocator.GridManager.RotateCircle(_selectedGridNode.GridLevel, angle);

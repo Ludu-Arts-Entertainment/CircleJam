@@ -36,11 +36,6 @@ public class GridNode : MonoBehaviour
         haveCharacter = true;
     }
 
-    public Vector3 GetPosition()
-    {
-        return haveCharacter ? character.transform.position : transform.position;
-    }
-
     public void SetSelectedColor(bool isSelected)
     {
         meshRenderer.GetPropertyBlock(PropertyBlock);
