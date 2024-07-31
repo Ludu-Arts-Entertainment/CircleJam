@@ -49,6 +49,8 @@ public class CircleJamGridProvider : IGridProvider
                 }
             }
         }
+
+        GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GoalUpdated(GameInstaller.Instance.SystemLocator.GoalManager.CurrentGoalCount, false));
     }
 
     public void RotateCircle(int circleIdx, float angle)

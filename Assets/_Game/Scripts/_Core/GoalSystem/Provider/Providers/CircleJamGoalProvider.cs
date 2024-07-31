@@ -5,6 +5,10 @@ using UnityEngine;
 public class CircleJamGoalProvider : IGoalProvider
 {
     private Dictionary<GoalColors, List<CharacterController>> _charactersByColor = new();
+
+    public int CurrentGoalCount => _currentGoalCount;
+    private int _currentGoalCount;
+
     public IGoalProvider CreateSelf()
     {
         return new CircleJamGoalProvider();
@@ -25,6 +29,7 @@ public class CircleJamGoalProvider : IGoalProvider
             _charactersByColor.Add(created.CharacterColor, new List<CharacterController>());
         }
         _charactersByColor[created.CharacterColor].Add(created.Character);
+        _currentGoalCount++;
     }
 
     private void OnGridUpdated(Events.GridUpdated updated)
@@ -36,7 +41,7 @@ public class CircleJamGoalProvider : IGoalProvider
             var idx = characters[0].CurrentGridNode.GridIdx;
             foreach(var character in characters)
             {
-                Debug.Log(character.CurrentGridNode.GridIdx);
+                //Debug.Log(character.CurrentGridNode.GridIdx);
                 if(character.CurrentGridNode.GridIdx != idx)
                 {
                     goalColors.Remove(character.Color);
@@ -51,7 +56,11 @@ public class CircleJamGoalProvider : IGoalProvider
                 GameInstaller.Instance.SystemLocator.PoolManager.Destroy("Character", character);
             }
 
+            _currentGoalCount -= _charactersByColor[goalColor].Count;
+            GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GoalUpdated(_currentGoalCount, true));
+
             Debug.Log($"{goalColor} goal is completed");
+
             _charactersByColor[goalColor].Clear();
             _charactersByColor.Remove(goalColor);
         }
@@ -87,6 +96,18 @@ public partial class Events
         {
             CharacterColor = characterColor;
             Character = character;
+        }
+    }
+
+    public struct GoalUpdated : IEvent
+    {
+        public int Amount;
+        public bool WithAnimation;
+
+        public GoalUpdated(int amount, bool withAnimation)
+        {
+            Amount = amount;
+            WithAnimation = withAnimation;
         }
     }
 }
