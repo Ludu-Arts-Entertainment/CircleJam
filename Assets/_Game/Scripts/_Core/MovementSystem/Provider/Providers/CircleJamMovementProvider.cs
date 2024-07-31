@@ -66,6 +66,8 @@ public class CircleJamMovementProvider : IMovementProvider
                 _selectedGridNode = character.CurrentGridNode;
             }
 
+            if(_selectedGridNode == null) return;
+
             Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
             initialDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
             GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(_selectedGridNode.GridLevel);

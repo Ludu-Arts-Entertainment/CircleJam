@@ -5,8 +5,8 @@ public class GridNode : MonoBehaviour
     [SerializeField] private Collider collider;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Color normalEmisionColor, selectedEmisionColor;
-    public int GridLevel => gridLevel;
-    private int gridLevel;
+    public int GridLevel => _gridLevel;
+    private int _gridLevel;
 
     public bool HaveCharacter => haveCharacter;
     private bool haveCharacter;
@@ -14,15 +14,24 @@ public class GridNode : MonoBehaviour
     public CharacterController Character => character;
     private CharacterController character;
 
+    private int _gridIdx;
+    public int GridIdx => _gridIdx;
+
     private MaterialPropertyBlock PropertyBlock => propertyBlock??= new MaterialPropertyBlock();
     private MaterialPropertyBlock propertyBlock;
 
-    public void Initialize(int gridLevel)
+    public void Initialize(int gridLevel, int gridIdx)
     {
         haveCharacter = false;
         character = null;
         
-        this.gridLevel = gridLevel;
+        _gridLevel = gridLevel;
+        _gridIdx = gridIdx;
+    }
+
+    public void UpdateGridIdx(int gridIdx)
+    {
+        _gridIdx = gridIdx;
     }
 
     public void CreateCharacter(GoalColors color, Transform lookTarget)
@@ -38,6 +47,8 @@ public class GridNode : MonoBehaviour
         character.transform.rotation = Quaternion.Euler(0, angle, 0);
 
         haveCharacter = true;
+
+        GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.CharacterCreated(color, character));
     }
 
     public void SetSelectedColor(bool isSelected)
@@ -45,5 +56,13 @@ public class GridNode : MonoBehaviour
         meshRenderer.GetPropertyBlock(PropertyBlock);
         PropertyBlock.SetColor("_EmissionColor", isSelected ? selectedEmisionColor : normalEmisionColor);
         meshRenderer.SetPropertyBlock(PropertyBlock);
+    }
+
+    public void ResetGrid()
+    {
+        if(haveCharacter)
+        {
+            GameInstaller.Instance.SystemLocator.PoolManager.Destroy("Character", character);
+        }
     }
 }

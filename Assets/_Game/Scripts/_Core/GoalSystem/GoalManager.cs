@@ -21,4 +21,9 @@ public class GoalManager : IManager
     {
         return _goalProvider != null;
     }
+
+    public void Reset()
+    {
+        _goalProvider.Reset();
+    }
 }
