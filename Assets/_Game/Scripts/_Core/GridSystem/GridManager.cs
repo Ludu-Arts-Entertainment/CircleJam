@@ -29,15 +29,15 @@ public class GridManager : IManager
     {
         _gridProvider.StartRotateCircle(circleIdx);
     }
-    
+
     public void RotateCircle(int circleIdx, float angle)
     {
         _gridProvider.RotateCircle(circleIdx, angle);
     }
 
-    public void StopRotateCircle(int circleIdx)
+    public void StopRotateCircle(int circleIdx, float totalAngle)
     {
-        _gridProvider.StopRotateCircle(circleIdx);
+        _gridProvider.StopRotateCircle(circleIdx, totalAngle);
     }
 
     public void ResetGrid()

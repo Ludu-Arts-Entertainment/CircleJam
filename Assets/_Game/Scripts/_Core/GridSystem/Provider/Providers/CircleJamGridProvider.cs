@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CircleJamGridProvider : IGridProvider
 {
     private const int ONE_CIRCLE_GRID_COUNT = 12;
-
+    public Dictionary<Transform, List<GridNode>> CircleGridsByParent => _circleGridsByParent;
     private Dictionary<Transform, List<GridNode>> _circleGridsByParent = new ();
     private Dictionary<int, Transform> _circleGridsParentById = new ();
     public IGridProvider CreateSelf()
@@ -64,15 +65,56 @@ public class CircleJamGridProvider : IGridProvider
         }
     }
 
-    public void StopRotateCircle(int circleIdx)
+    public void StopRotateCircle(int circleIdx, float totalAngle)
     {
         if(!_circleGridsParentById.ContainsKey(circleIdx)) return;
+        
         var angle = (360 / ONE_CIRCLE_GRID_COUNT);
+
         _circleGridsParentById[circleIdx].rotation = Quaternion.Euler(0, Mathf.Round(_circleGridsParentById[circleIdx].eulerAngles.y / angle) * angle, 0);
 
         foreach (var grid in _circleGridsByParent[_circleGridsParentById[circleIdx]])
         {
             grid.SetSelectedColor(false);
+        }
+
+        totalAngle = totalAngle % 360;
+        var to = Mathf.RoundToInt(totalAngle / angle) * angle;
+        var angleCount = Mathf.Abs(to / angle);
+        
+
+        if(totalAngle > 0)
+        {
+            //Listeyi saat yönünde angle count kadar kaydır
+            _circleGridsByParent[_circleGridsParentById[circleIdx]] = 
+                _circleGridsByParent[_circleGridsParentById[circleIdx]]
+                    .Skip(ONE_CIRCLE_GRID_COUNT - angleCount)
+                    .Concat(_circleGridsByParent[_circleGridsParentById[circleIdx]].Take(ONE_CIRCLE_GRID_COUNT - angleCount))
+                    .ToList();
+        }
+        else
+        {
+            //Listeyi saat yönünün tersine angle count kadar kaydır
+            _circleGridsByParent[_circleGridsParentById[circleIdx]] = 
+                _circleGridsByParent[_circleGridsParentById[circleIdx]]
+                    .Skip(angleCount)
+                    .Concat(_circleGridsByParent[_circleGridsParentById[circleIdx]].Take(angleCount))
+                    .ToList();
+        }
+
+        GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GridUpdated());
+
+        for(int i = 0; i < 4; i++)
+        {
+            int j = 0;
+            foreach(var grid in _circleGridsByParent[_circleGridsByParent.Keys.ToList()[i]])
+            {
+                if(grid.HaveCharacter)
+                {
+                    Debug.Log($"Character idx: {j} color: {grid.Character.Color}");
+                }
+                j++;
+            }
         }
     }
 
@@ -90,5 +132,12 @@ public class CircleJamGridProvider : IGridProvider
 
         _circleGridsByParent.Clear();   
         _circleGridsParentById.Clear();
+    }
+}
+
+public partial class Events
+{
+    public struct GridUpdated : IEvent
+    {
     }
 }
