@@ -1,13 +1,11 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class CircleJamMovementProvider : IMovementProvider
 {
     public int MovementCount => currentMoveCount;
     private int currentMoveCount;
-    private int totalMoveCount;
 
     private bool _isLevelStopped = false;
 
@@ -30,7 +28,6 @@ public class CircleJamMovementProvider : IMovementProvider
     private void OnLevelLoaded(Events.OnLevelLoaded loaded)
     {
         //Sonrasında datadan alınacak
-        totalMoveCount = 10;
         currentMoveCount = 10;
 
         GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.MoveCountUpdated(currentMoveCount));
@@ -49,12 +46,9 @@ public class CircleJamMovementProvider : IMovementProvider
 
     private Vector3 initialDirection;
     private GridNode _selectedGridNode;
-    private CharacterController _selectedCharacter;
     private async void OnPointerDown(object sender, PointerDownEventArgs e)
     {
         if(_isLevelStopped) return;
-
-        _selectedCharacter = null;
 
         Ray ray = Camera.main.ScreenPointToRay(e.ScreenPosition);
         bool hasHit = Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity);
@@ -65,31 +59,21 @@ public class CircleJamMovementProvider : IMovementProvider
         {
             if(hit.collider.TryGetComponent(out GridNode gridNode))
             {
-                Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
                 _selectedGridNode = gridNode;
-                initialDirection = (hitPoint.point - gridNode.transform.position).normalized;
-
-                GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(gridNode.GridLevel);
-
-                await UniTask.Delay(20);
-
-                GameInstaller.Instance.SystemLocator.InputManager.PointerDrag += OnPointerDrag;
-                GameInstaller.Instance.SystemLocator.InputManager.PointerUp += OnPointerUp;
             }
             else if(hit.collider.TryGetComponent(out CharacterController character))
             {
-                _selectedCharacter = character;
-                Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
                 _selectedGridNode = character.CurrentGridNode;
-                initialDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
-
-                GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(character.CurrentGridNode.GridLevel);
-
-                await UniTask.Delay(20);
-
-                GameInstaller.Instance.SystemLocator.InputManager.PointerDrag += OnPointerDrag;
-                GameInstaller.Instance.SystemLocator.InputManager.PointerUp += OnPointerUp;
             }
+
+            Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
+            initialDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
+            GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(_selectedGridNode.GridLevel);
+
+            await UniTask.Delay(20);
+
+            GameInstaller.Instance.SystemLocator.InputManager.PointerDrag += OnPointerDrag;
+            GameInstaller.Instance.SystemLocator.InputManager.PointerUp += OnPointerUp;
 
             GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.DragStarted());
         }
@@ -113,7 +97,7 @@ public class CircleJamMovementProvider : IMovementProvider
 
     private void OnPointerUp(object sender, PointerUpEventArgs e)
     {
-        GameInstaller.Instance.SystemLocator.GridManager.StopRotateCircle(_selectedGridNode.GridLevel);
+        GameInstaller.Instance.SystemLocator.GridManager.StopRotateCircle(_selectedGridNode.GridLevel, totalAngle);
 
         _selectedGridNode = null;
 

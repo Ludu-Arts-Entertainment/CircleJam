@@ -7,8 +7,12 @@ public class GridNode : MonoBehaviour
     [SerializeField] private Color normalEmisionColor, selectedEmisionColor;
     public int GridLevel => gridLevel;
     private int gridLevel;
+
+    public bool HaveCharacter => haveCharacter;
     private bool haveCharacter;
-    CharacterController character;
+
+    public CharacterController Character => character;
+    private CharacterController character;
 
     private MaterialPropertyBlock PropertyBlock => propertyBlock??= new MaterialPropertyBlock();
     private MaterialPropertyBlock propertyBlock;
