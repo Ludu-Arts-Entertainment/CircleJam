@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class CircleJamGoalProvider : IGoalProvider
 {
-    private Dictionary<GoalColors, List<CharacterController>> _charactersByColor = new();
+    private Dictionary<GoalColor, List<CharacterController>> _charactersByColor = new();
 
     public int CurrentGoalCount => _currentGoalCount;
     private int _currentGoalCount;
     
-    public List<GoalColors> LeveledGoalColors => leveledGoalColors;
-    private List<GoalColors> leveledGoalColors = new List<GoalColors>();
+    public List<GoalColor> LeveledGoalColors => leveledGoalColors;
+    private List<GoalColor> leveledGoalColors = new List<GoalColor>();
+
+    private SystemLocator _systemLocator;
     public IGoalProvider CreateSelf()
     {
         return new CircleJamGoalProvider();
@@ -19,22 +21,23 @@ public class CircleJamGoalProvider : IGoalProvider
 
     public void Initialize(Action onReady)
     {
+        _systemLocator = GameInstaller.Instance.SystemLocator;
         onReady?.Invoke();
         _charactersByColor.Clear();
 
         leveledGoalColors.Clear();
-        leveledGoalColors.Add(GoalColors.Blue);
-        leveledGoalColors.Add(GoalColors.Green);
+        leveledGoalColors.Add(GoalColor.Blue);
+        leveledGoalColors.Add(GoalColor.Green);
 
-        GameInstaller.Instance.SystemLocator.EventManager.Subscribe<Events.CharacterCreated>(OnCharacterCreated);
-        GameInstaller.Instance.SystemLocator.EventManager.Subscribe<Events.GridUpdated>(OnGridUpdated);
+        _systemLocator.EventManager.Subscribe<Events.CharacterCreated>(OnCharacterCreated);
+        _systemLocator.EventManager.Subscribe<Events.GridUpdated>(OnGridUpdated);
     }
 
     public void UpdateLeveledGoal()
     {
         leveledGoalColors.Clear();
-        leveledGoalColors.Add(GoalColors.Blue);
-        leveledGoalColors.Add(GoalColors.Green);
+        leveledGoalColors.Add(GoalColor.Blue);
+        leveledGoalColors.Add(GoalColor.Green);
     }
 
     private void OnCharacterCreated(Events.CharacterCreated created)
@@ -50,14 +53,15 @@ public class CircleJamGoalProvider : IGoalProvider
     private void OnGridUpdated(Events.GridUpdated updated)
     {
         //aynı renkteki karakterlerin current grid'lerinin index'i aynı ise goal'den onları sil
-        List<GoalColors> goalColors = _charactersByColor.Keys.ToList();
+        List<GoalColor> goalColors = _charactersByColor.Keys.ToList();
         foreach(var characters in _charactersByColor.Values)
         {   
-            var idx = characters[0].CurrentGridNode.GridIdx;
+            var idx = characters[0].CurrentGridNode.GridNodeData.GridIdx;
             foreach(var character in characters)
             {
-                //Debug.Log(character.CurrentGridNode.GridIdx);
-                if(character.CurrentGridNode.GridIdx != idx)
+                var gridNodeData = character.CurrentGridNode.GridNodeData;
+                if((gridNodeData.CircleLevel > 0 && _systemLocator.GridManager.CheckAnyObstacle(gridNodeData.CircleLevel - 1, idx)) 
+                    || gridNodeData.GridIdx != idx)
                 {
                     goalColors.Remove(character.Color);
                 }
@@ -70,7 +74,7 @@ public class CircleJamGoalProvider : IGoalProvider
             {
                 foreach(var character in _charactersByColor[goalColor])
                 {
-                    GameInstaller.Instance.SystemLocator.PoolManager.Destroy("Character", character);
+                    _systemLocator.PoolManager.Destroy("Character", character);
                 }
 
                 _currentGoalCount -= _charactersByColor[goalColor].Count;
@@ -78,7 +82,7 @@ public class CircleJamGoalProvider : IGoalProvider
                 leveledGoalColors.Remove(goalColor);
 
                 Debug.Log($"{goalColor} goal is completed");
-                GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GoalUpdated(_charactersByColor[goalColor].Count, true));
+                _systemLocator.EventManager.Trigger(new Events.GoalUpdated(_charactersByColor[goalColor].Count, true));
                 
                 _charactersByColor[goalColor].Clear();
                 _charactersByColor.Remove(goalColor);
@@ -89,7 +93,7 @@ public class CircleJamGoalProvider : IGoalProvider
 
         if(_charactersByColor.Count == 0)
         {
-            GameInstaller.Instance.SystemLocator.UIManager.Show(UITypes.WinPopup, null);
+            _systemLocator.UIManager.Show(UITypes.WinPopup, null);
         }
     }
 
@@ -99,7 +103,7 @@ public class CircleJamGoalProvider : IGoalProvider
         {
             foreach(var character in goalColor)
             {
-                GameInstaller.Instance.SystemLocator.PoolManager.Destroy("Character", character);
+                _systemLocator.PoolManager.Destroy("Character", character);
             }
         }
 
@@ -111,10 +115,10 @@ public partial class Events
 {
     public struct CharacterCreated : IEvent
     {
-        public GoalColors CharacterColor;
+        public GoalColor CharacterColor;
         public CharacterController Character;
 
-        public CharacterCreated(GoalColors characterColor, CharacterController character)
+        public CharacterCreated(GoalColor characterColor, CharacterController character)
         {
             CharacterColor = characterColor;
             Character = character;
@@ -134,7 +138,7 @@ public partial class Events
     }
 }
 
-public enum GoalColors
+public enum GoalColor
 {
     None = 0,
     Red = 1,

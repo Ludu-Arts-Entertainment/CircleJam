@@ -17,16 +17,32 @@ MonoBehaviour:
     Prefab: {fileID: 361754249626787815, guid: daa7be0701a544059a040928c1b68513, type: 3}
     InitialCount: 0
     Tag: 0
+  - Id: GridModel_1
+    Prefab: {fileID: 7448112226212801846, guid: 11e851c758c974de79c4a7b8adf7e980, type: 3}
+    InitialCount: 0
+    Tag: 0
   - Id: GridLevel_2
     Prefab: {fileID: 8022406660140694256, guid: 62a886cc5de714412bf6d373811adb51, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: GridModel_2
+    Prefab: {fileID: 8641944501336648325, guid: a481678f8ab084e31a10ecfe984a2554, type: 3}
     InitialCount: 0
     Tag: 0
   - Id: GridLevel_3
     Prefab: {fileID: -3153321971808421394, guid: b41edffbbe5f6468d9dd7f54a3826d95, type: 3}
     InitialCount: 0
     Tag: 0
+  - Id: GridModel_3
+    Prefab: {fileID: 971885406044433988, guid: df18a604b17914ad4a4ee5e45eb120f4, type: 3}
+    InitialCount: 0
+    Tag: 0
   - Id: GridLevel_4
     Prefab: {fileID: -7979625308496060034, guid: 402126d327976446e8cde2ecf45fa075, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: GridModel_4
+    Prefab: {fileID: 2793349239615410663, guid: 256ef3c5e27bf49f18cbb83fbb4da1d5, type: 3}
     InitialCount: 0
     Tag: 0
   - Id: ExitDoor
@@ -39,5 +55,25 @@ MonoBehaviour:
     Tag: 0
   - Id: Character
     Prefab: {fileID: 4762284917463365626, guid: d01d73d89d7e44f1b8c1d1f8cb626bac, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: WaterLevel_1
+    Prefab: {fileID: 1940237465205687162, guid: da681305b78234b69b392b6fec4fffef, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: WaterLevel_2
+    Prefab: {fileID: 8360832182271352238, guid: 3c81c20d43e904ac3ba1b6dac202e17d, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: WaterLevel_3
+    Prefab: {fileID: 5473360948499472578, guid: 1fef1344004064a93bee3c57b20a62bc, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: WaterLevel_4
+    Prefab: {fileID: 4796331107141412970, guid: 76d9f343af61f4ce2abe2544de59d686, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: Bridge
+    Prefab: {fileID: 3973912104860235297, guid: 8f6961d5bd8854026a5f43cb89b61048, type: 3}
     InitialCount: 0
     Tag: 0

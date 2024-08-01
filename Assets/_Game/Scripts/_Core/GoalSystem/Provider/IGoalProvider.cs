@@ -8,5 +8,5 @@ public interface IGoalProvider
     void Reset();
     void UpdateLeveledGoal();
     int CurrentGoalCount { get; }
-    List<GoalColors> LeveledGoalColors { get; }
+    List<GoalColor> LeveledGoalColors { get; }
 }

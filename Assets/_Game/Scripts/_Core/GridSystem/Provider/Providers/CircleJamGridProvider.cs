@@ -29,33 +29,66 @@ public class CircleJamGridProvider : IGridProvider
         for (int i = 0; i < circleCount; i++)
         {
             var circleData = new CircleData();
-            circleData.IsCircleWater = false;
-            circleData.GridNodes = new List<GridNode>();
             circleData.CircleTransform = gridParentObject.GridCircleParents[i];
+            circleData.GridNodes = new List<GridNode>();
+
             _circleIdxs.Add(i, new List<int>());
 
-            for (int j = 0; j < ONE_CIRCLE_GRID_COUNT; j++)
+            if(i == 1)
             {
-                var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}", parent: circleData.CircleTransform);
-                grid.Initialize(i, j);
-                grid.transform.localPosition = Vector3.zero;
-                grid.transform.localRotation = Quaternion.Euler(0, j * (360 / ONE_CIRCLE_GRID_COUNT), 0);
-                circleData.GridNodes.Add(grid);
-                _circleIdxs[i].Add(j);
+                circleData.IsCircleWater = true;
+                var waterObject = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>($"WaterLevel_{i+1}", parent: circleData.CircleTransform);
+                waterObject.localPosition = Vector3.zero;
 
-                /*if((i == 0 && j == 0)|| (i == 1 && j == 4) || (i == 2 && j == 8) || (i == 3 && j == 2))
+                for (int j = 0; j < ONE_CIRCLE_GRID_COUNT; j++)
                 {
-                    grid.CreateCharacter(GoalColors.Red, gridParentObject.DoorTransform);
-                }*/
-
-                if((i == 0 && j == 3) || (i == 1 && j == 7) || (i == 2 && j == 11) || (i == 3 && j == 5))
-                {
-                    grid.CreateCharacter(GoalColors.Blue, gridParentObject.DoorTransform);
+                    var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}", parent: circleData.CircleTransform);
+                    var gridNodeData = new GridNodeData();
+                    
+                    if(j == 8)
+                    {
+                        gridNodeData.GridType = GridType.FixedPath;
+                        gridNodeData.FixedPathType = FixedPathType.Bridge;
+                    }
+                    else
+                    {
+                        gridNodeData.GridType = GridType.Empty;
+                    }
+                    gridNodeData.CircleLevel = i;
+                    gridNodeData.GridIdx = j;
+                    grid.Initialize(gridNodeData);
+                    grid.transform.localPosition = Vector3.zero;
+                    grid.transform.localRotation = Quaternion.Euler(0, j * (360 / ONE_CIRCLE_GRID_COUNT), 0);
+                    circleData.GridNodes.Add(grid);
+                    _circleIdxs[i].Add(j);
                 }
+            }
+            else
+            {
+                circleData.IsCircleWater = false;
 
-                if((i == 0 && j == 1) || (i == 1 && j == 6) || (i == 2 && j == 3))
+                for (int j = 0; j < ONE_CIRCLE_GRID_COUNT; j++)
                 {
-                    grid.CreateCharacter(GoalColors.Green, gridParentObject.DoorTransform);
+                    var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}", parent: circleData.CircleTransform);
+                    var gridNodeData = new GridNodeData();
+                    gridNodeData.GridType = GridType.Normal;
+                    gridNodeData.CircleLevel = i;
+                    gridNodeData.GridIdx = j;
+                    grid.Initialize(gridNodeData);
+                    grid.transform.localPosition = Vector3.zero;
+                    grid.transform.localRotation = Quaternion.Euler(0, j * (360 / ONE_CIRCLE_GRID_COUNT), 0);
+                    circleData.GridNodes.Add(grid);
+                    _circleIdxs[i].Add(j);
+
+                    if((i == 0 && j == 3) || (i == 2 && j == 11) || (i == 3 && j == 5))
+                    {
+                        grid.CreateCharacter(GoalColor.Blue, gridParentObject.DoorTransform);
+                    }
+
+                    if((i == 0 && j == 1) || (i == 2 && j == 3))
+                    {
+                        grid.CreateCharacter(GoalColor.Green, gridParentObject.DoorTransform);
+                    }
                 }
             }
             _circleGridsParentById.Add(i, circleData);
@@ -142,6 +175,13 @@ public class CircleJamGridProvider : IGridProvider
 
         _circleGridsParentById.Clear();
         _circleIdxs.Clear();
+    }
+
+    public bool CheckAnyObstacle(int circleIdx, int gridIdx)
+    {
+        if(!_circleGridsParentById.ContainsKey(circleIdx)) return false;
+        if(_circleGridsParentById[circleIdx].GridNodes[gridIdx].GridNodeData.GridType == GridType.Empty) return true;
+        else return false;
     }
 }
 

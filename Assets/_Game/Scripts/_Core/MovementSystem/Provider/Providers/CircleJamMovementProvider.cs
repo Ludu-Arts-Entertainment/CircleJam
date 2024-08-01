@@ -57,7 +57,7 @@ public class CircleJamMovementProvider : IMovementProvider
 
         if(hasHit)
         {
-            if(hit.collider.TryGetComponent(out GridNode gridNode))
+            if(hit.collider.TryGetComponent(out GridNode gridNode) && gridNode.GridNodeData.GridType == GridType.Normal)
             {
                 _selectedGridNode = gridNode;
             }
@@ -70,7 +70,7 @@ public class CircleJamMovementProvider : IMovementProvider
 
             Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
             initialDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
-            GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(_selectedGridNode.GridLevel);
+            GameInstaller.Instance.SystemLocator.GridManager.StartRotateCircle(_selectedGridNode.GridNodeData.CircleLevel);
 
             await UniTask.Delay(20);
 
@@ -92,14 +92,14 @@ public class CircleJamMovementProvider : IMovementProvider
         Vector3 currentDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
         var angle = Vector3.SignedAngle(initialDirection, currentDirection, Vector3.up);
         totalAngle += angle;
-        GameInstaller.Instance.SystemLocator.GridManager.RotateCircle(_selectedGridNode.GridLevel, angle);
+        GameInstaller.Instance.SystemLocator.GridManager.RotateCircle(_selectedGridNode.GridNodeData.CircleLevel, angle);
 
         initialDirection = currentDirection;
     }
 
     private void OnPointerUp(object sender, PointerUpEventArgs e)
     {
-        GameInstaller.Instance.SystemLocator.GridManager.StopRotateCircle(_selectedGridNode.GridLevel, totalAngle);
+        GameInstaller.Instance.SystemLocator.GridManager.StopRotateCircle(_selectedGridNode.GridNodeData.CircleLevel, totalAngle);
 
         _selectedGridNode = null;
 

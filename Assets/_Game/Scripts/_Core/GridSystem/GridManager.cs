@@ -40,6 +40,11 @@ public class GridManager : IManager
         _gridProvider.StopRotateCircle(circleIdx, totalAngle);
     }
 
+    public bool CheckAnyObstacle(int circleIdx, int gridIdx)
+    {
+        return _gridProvider.CheckAnyObstacle(circleIdx, gridIdx);
+    }
+
     public void ResetGrid()
     {
         _gridProvider.ResetGrid();

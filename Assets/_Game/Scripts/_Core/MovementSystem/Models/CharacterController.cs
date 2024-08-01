@@ -16,10 +16,10 @@ public class CharacterController : MonoBehaviour, IPoolObject
     public string PoolId { get => "Character" ; set => throw new System.NotImplementedException(); }
 
     private GridNode _currentGridNode;
-    private GoalColors _color;
-    public GoalColors Color => _color;
+    private GoalColor _color;
+    public GoalColor Color => _color;
     
-    public void Initialize(GoalColors color, GridNode gridNode)
+    public void Initialize(GoalColor color, GridNode gridNode)
     {
         _color = color;
         _currentGridNode = gridNode;

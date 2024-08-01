@@ -11,7 +11,7 @@ public class CharacterDataService
         _characterDataContainer = Resources.Load<CharacterDataContainer>("CharacterDataContainer");
         _isReady = true;
     }
-    public static CharacterData GetCharacterByColor(GoalColors color)
+    public static CharacterData GetCharacterByColor(GoalColor color)
     {
         if (_isReady) return _characterDataContainer.GetCharacterByColor(color);
         Initialize();

@@ -8,7 +8,7 @@ public class CharacterDataContainer : ScriptableObject
 {
     public List<CharacterData> Characters = new List<CharacterData>();
 
-    public CharacterData GetCharacterByColor(GoalColors color)
+    public CharacterData GetCharacterByColor(GoalColor color)
     {
         foreach (var character in Characters)
         {
@@ -25,6 +25,6 @@ public class CharacterDataContainer : ScriptableObject
 [Serializable]
 public class CharacterData
 {
-    public GoalColors Color;
+    public GoalColor Color;
     public Material Material;
 }
