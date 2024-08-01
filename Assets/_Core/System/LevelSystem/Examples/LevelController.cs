@@ -9,6 +9,8 @@ public class LevelController : MonoBehaviour, IPoolObject
     public void OnSpawned()
     {
         GameInstaller.Instance.SystemLocator.GridManager.CreateGrid(4, gridParent);
+        GameInstaller.Instance.SystemLocator.GoalManager.UpdateLeveledGoal();
+        GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GoalUpdated(GameInstaller.Instance.SystemLocator.GoalManager.CurrentGoalCount, false));
     }
 
     public void OnRecycled()

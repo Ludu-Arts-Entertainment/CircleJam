@@ -10,6 +10,7 @@ public class CircleJamGoalProvider : IGoalProvider
     public int CurrentGoalCount => _currentGoalCount;
     private int _currentGoalCount;
     
+    public List<GoalColors> LeveledGoalColors => leveledGoalColors;
     private List<GoalColors> leveledGoalColors = new List<GoalColors>();
     public IGoalProvider CreateSelf()
     {
@@ -21,18 +22,19 @@ public class CircleJamGoalProvider : IGoalProvider
         onReady?.Invoke();
         _charactersByColor.Clear();
 
-        GameInstaller.Instance.SystemLocator.EventManager.Subscribe<Events.OnLevelLoaded>(OnLevelLoaded);
-        GameInstaller.Instance.SystemLocator.EventManager.Subscribe<Events.CharacterCreated>(OnCharacterCreated);
-        GameInstaller.Instance.SystemLocator.EventManager.Subscribe<Events.GridUpdated>(OnGridUpdated);
-    }
-
-    private void OnLevelLoaded(Events.OnLevelLoaded loaded)
-    {
         leveledGoalColors.Clear();
         leveledGoalColors.Add(GoalColors.Blue);
         leveledGoalColors.Add(GoalColors.Green);
 
-        GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.OnGoalColorUpdated(leveledGoalColors.First()));
+        GameInstaller.Instance.SystemLocator.EventManager.Subscribe<Events.CharacterCreated>(OnCharacterCreated);
+        GameInstaller.Instance.SystemLocator.EventManager.Subscribe<Events.GridUpdated>(OnGridUpdated);
+    }
+
+    public void UpdateLeveledGoal()
+    {
+        leveledGoalColors.Clear();
+        leveledGoalColors.Add(GoalColors.Blue);
+        leveledGoalColors.Add(GoalColors.Green);
     }
 
     private void OnCharacterCreated(Events.CharacterCreated created)
@@ -72,18 +74,14 @@ public class CircleJamGoalProvider : IGoalProvider
                 }
 
                 _currentGoalCount -= _charactersByColor[goalColor].Count;
-                GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GoalUpdated(_currentGoalCount, true));
-
-                Debug.Log($"{goalColor} goal is completed");
-
-                _charactersByColor[goalColor].Clear();
-                _charactersByColor.Remove(goalColor);
 
                 leveledGoalColors.Remove(goalColor);
-                if(leveledGoalColors.Count > 0)
-                {
-                    GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.OnGoalColorUpdated(leveledGoalColors.First()));
-                }
+
+                Debug.Log($"{goalColor} goal is completed");
+                GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GoalUpdated(_charactersByColor[goalColor].Count, true));
+                
+                _charactersByColor[goalColor].Clear();
+                _charactersByColor.Remove(goalColor);
 
                 break;
             }
@@ -132,15 +130,6 @@ public partial class Events
         {
             Amount = amount;
             WithAnimation = withAnimation;
-        }
-    }
-
-    public struct OnGoalColorUpdated : IEvent
-    {
-        public GoalColors GoalColor;
-        public OnGoalColorUpdated(GoalColors goalColor)
-        {
-            GoalColor = goalColor;
         }
     }
 }

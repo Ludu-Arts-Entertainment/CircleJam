@@ -7,6 +7,7 @@ using UnityEngine;
 public class GoalManager : IManager
 {
     public int CurrentGoalCount => _goalProvider.CurrentGoalCount; 
+    public List<GoalColors> LeveledGoalColors => _goalProvider.LeveledGoalColors; 
     private IGoalProvider _goalProvider;
     public IManager CreateSelf()
     {
@@ -27,5 +28,10 @@ public class GoalManager : IManager
     public void Reset()
     {
         _goalProvider.Reset();
+    }
+
+    public void UpdateLeveledGoal()
+    {
+        _goalProvider.UpdateLeveledGoal();
     }
 }
