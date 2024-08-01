@@ -43,9 +43,19 @@ public class CircleJamGridProvider : IGridProvider
                 _circleGridsByParent[gridParent.transform].Add(grid);
                 _circleIdxs[i].Add(j);
 
-                if((i == 0 && j == 0)|| (i == 1 && j == 4) || (i == 2 && j == 8) || (i == 3 && j == 2))
+                /*if((i == 0 && j == 0)|| (i == 1 && j == 4) || (i == 2 && j == 8) || (i == 3 && j == 2))
                 {
                     grid.CreateCharacter(GoalColors.Red, gridParentObject.DoorTransform);
+                }*/
+
+                if((i == 0 && j == 3) || (i == 1 && j == 7) || (i == 2 && j == 11) || (i == 3 && j == 5))
+                {
+                    grid.CreateCharacter(GoalColors.Blue, gridParentObject.DoorTransform);
+                }
+
+                if((i == 0 && j == 1) || (i == 1 && j == 6) || (i == 2 && j == 3))
+                {
+                    grid.CreateCharacter(GoalColors.Green, gridParentObject.DoorTransform);
                 }
             }
         }
