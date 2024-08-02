@@ -3,13 +3,12 @@ using UnityEngine.UI;
 
 public class WinPopup : PopupBase
 {
-    [SerializeField] private Button contiuneButton, closeButton;
+    [SerializeField] private Button contiuneButton;
 
     protected override void OnShown()
     {
         base.OnShown();
         contiuneButton.onClick.AddListener(OnContiuneButtonClicked);
-        closeButton.onClick.AddListener(OnContiuneButtonClicked);
         GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.OnLevelStopped());
     }
 
@@ -17,7 +16,6 @@ public class WinPopup : PopupBase
     {
         base.OnHidden();
         contiuneButton.onClick.RemoveListener(OnContiuneButtonClicked);
-        closeButton.onClick.RemoveListener(OnContiuneButtonClicked);
         GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.OnLevelContiuned());
     }
 
