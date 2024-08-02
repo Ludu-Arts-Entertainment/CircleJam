@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 0
+  - 736966205164547
   appLabels:
-  - App Name
+  - Circle Jam
   cookie: 1
   logging: 1
   status: 1
