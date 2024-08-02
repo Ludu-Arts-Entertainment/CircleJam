@@ -21,9 +21,12 @@ public class BasicWatchToEarnProvider : IWatchToEarnProvider
         return new BasicWatchToEarnProvider();
     }
 
-    public void Initialize(Action onReady)
+    public async void Initialize(Action onReady)
     {
         _cts = new CancellationTokenSource();
+#if RemoteConfigManager_Enabled
+        await UniTask.WaitUntil(()=>GameInstaller.Instance.ManagerDictionary.ContainsKey(ManagerEnums.RemoteConfigManager));
+#endif
 #if WatchToEarnManager_Enabled
         _watchToEarnConfig = GameInstaller.Instance.SystemLocator.RemoteConfigManager.GetObject<WatchToEarnConfig>();
 #endif

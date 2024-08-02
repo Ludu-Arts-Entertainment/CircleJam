@@ -396,7 +396,7 @@ MonoBehaviour:
     PoolProvider: 0
     productManagementProvider: 0
     QuestProvider: 0
-    RemoteConfigProvider: 0
+    RemoteConfigProvider: 1
     RouletteProvider: 0
     SettingProvider: 0
     SpecialOfferProviderEnums: 0

@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 public class AdManager : IManager
 {
     // if you want use MaxSdk, you should add a MaxSdk_Enabled in Symbols
@@ -8,9 +9,11 @@ public class AdManager : IManager
         return new AdManager();
     }
 
-    public void Initialize(GameInstaller gameInstaller, Action onReady)
+    public async void Initialize(GameInstaller gameInstaller, Action onReady)
     {
-        
+#if RemoteConfigManager_Enabled
+        await UniTask.WaitUntil(()=>GameInstaller.Instance.ManagerDictionary.ContainsKey(ManagerEnums.RemoteConfigManager));
+#endif
         _adProvider = AdProviderFactory.Create(gameInstaller.Customizer.AdProvider);
         _adProvider.Initialize(onReady );
     }

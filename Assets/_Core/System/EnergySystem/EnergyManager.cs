@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 
 public class EnergyManager : IManager
 {
@@ -13,8 +14,11 @@ public class EnergyManager : IManager
         remove => _energyProvider.OnEnergyChanged -= value;
     }
 
-    public void Initialize(GameInstaller gameInstaller, Action onReady)
+    public async void Initialize(GameInstaller gameInstaller, Action onReady)
     {
+#if RemoteConfigManager_Enabled
+        await UniTask.WaitUntil(()=>GameInstaller.Instance.ManagerDictionary.ContainsKey(ManagerEnums.RemoteConfigManager));
+#endif
         _energyProvider = EnergyProviderFactory.Create(gameInstaller.Customizer.EnergyProvider);
         _energyProvider.Initialize(onReady);
     }
