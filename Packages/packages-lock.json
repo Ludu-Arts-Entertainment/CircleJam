@@ -7,6 +7,31 @@
       "dependencies": {},
       "hash": "5cc97c7f0085624b6ef57853d70b404440060cef"
     },
+    "com.google.external-dependency-manager": {
+      "version": "https://github.com/Ludu-Arts-Entertainment/com.ldk.external-dependency-manager.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8d95930fa3717e48d6b370c84a164e0a03273850"
+    },
+    "com.google.firebase.app": {
+      "version": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.app.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.177"
+      },
+      "hash": "c4b8a780aa19354d0e6d0741fb839d641713022f"
+    },
+    "com.google.firebase.remote-config": {
+      "version": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.remote-config.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.app": "11.6.0"
+      },
+      "hash": "9dd1c7ac945c9c9f4a53922446769b474957ea5a"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -31,7 +56,7 @@
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
