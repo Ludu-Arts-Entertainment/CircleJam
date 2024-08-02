@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class InGameTopOverlay : PanelBase
+public class InGameTopOverlay : OverlayBase
 {
     [SerializeField] private TextMeshProUGUI moveCountText, goalCountText;
 
