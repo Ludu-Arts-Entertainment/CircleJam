@@ -42,7 +42,9 @@ public class GoalDoor : MonoBehaviour
 
     private void UpdateDoorColor()
     {
-        if(GameInstaller.Instance.SystemLocator.GoalManager.LeveledGoalColors.Count > 0)
+        var goalColorOrderEnable = GameInstaller.Instance.SystemLocator.RemoteConfigManager.GetObject<GoalConfig>();
+
+        if(GameInstaller.Instance.SystemLocator.GoalManager.LeveledGoalColors.Count > 0 && goalColorOrderEnable.IsGoalColorOrderEnable)
         {
             //Kendi datası olursa oradan alınacak.
             var characterData = CharacterDataService.GetCharacterByColor(GameInstaller.Instance.SystemLocator.GoalManager.LeveledGoalColors.First());

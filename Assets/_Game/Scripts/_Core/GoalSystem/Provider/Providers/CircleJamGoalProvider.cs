@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class CircleJamGoalProvider : IGoalProvider
@@ -14,15 +15,15 @@ public class CircleJamGoalProvider : IGoalProvider
     private List<GoalColor> leveledGoalColors = new List<GoalColor>();
 
     private SystemLocator _systemLocator;
+    private bool _isGoalColorOrderEnable;
     public IGoalProvider CreateSelf()
     {
         return new CircleJamGoalProvider();
     }
 
-    public void Initialize(Action onReady)
+    public async void Initialize(Action onReady)
     {
         _systemLocator = GameInstaller.Instance.SystemLocator;
-        onReady?.Invoke();
         _charactersByColor.Clear();
 
         leveledGoalColors.Clear();
@@ -31,6 +32,14 @@ public class CircleJamGoalProvider : IGoalProvider
 
         _systemLocator.EventManager.Subscribe<Events.CharacterCreated>(OnCharacterCreated);
         _systemLocator.EventManager.Subscribe<Events.GridUpdated>(OnGridUpdated);
+
+#if RemoteConfigManager_Enabled
+        await UniTask.WaitUntil(()=>GameInstaller.Instance.ManagerDictionary.ContainsKey(ManagerEnums.RemoteConfigManager));
+        var goalConfig = _systemLocator.RemoteConfigManager.GetObject<GoalConfig>();
+        if(goalConfig != null)
+            _isGoalColorOrderEnable = goalConfig.IsGoalColorOrderEnable;
+#endif
+        onReady?.Invoke();
     }
 
     public void UpdateLeveledGoal()
@@ -63,14 +72,14 @@ public class CircleJamGoalProvider : IGoalProvider
                 if((gridNodeData.CircleLevel > 0 && _systemLocator.GridManager.CheckAnyObstacle(gridNodeData.CircleLevel - 1, idx)) 
                     || gridNodeData.GridIdx != idx)
                 {
-                    goalColors.Remove(character.Color);
+                    goalColors.Remove(character.Color); 
                 }
             }
         }
 
         foreach(var goalColor in goalColors)
         {
-            if(goalColor == leveledGoalColors.First())
+            if(goalColor == leveledGoalColors.First() || !_isGoalColorOrderEnable)
             {
                 foreach(var character in _charactersByColor[goalColor])
                 {
