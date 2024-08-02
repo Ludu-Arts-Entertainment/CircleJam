@@ -23,6 +23,15 @@
       },
       "hash": "c4b8a780aa19354d0e6d0741fb839d641713022f"
     },
+    "com.google.firebase.crashlytics": {
+      "version": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.crashlytics.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.firebase.app": "11.6.0"
+      },
+      "hash": "30424130723ae2beeb119aac20a994a8835c6f17"
+    },
     "com.google.firebase.remote-config": {
       "version": "https://github.com/Ludu-Arts-Entertainment/com.ldk.firebase.remote-config.git",
       "depth": 0,
