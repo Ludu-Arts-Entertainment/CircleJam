@@ -77,3 +77,7 @@ MonoBehaviour:
     Prefab: {fileID: 3973912104860235297, guid: 8f6961d5bd8854026a5f43cb89b61048, type: 3}
     InitialCount: 0
     Tag: 0
+  - Id: Sandal
+    Prefab: {fileID: 8643992986622061361, guid: 1e4647878bc1f47eeb1c86f80fabca44, type: 3}
+    InitialCount: 0
+    Tag: 0

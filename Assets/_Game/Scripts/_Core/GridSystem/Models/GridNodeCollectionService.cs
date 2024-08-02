@@ -18,4 +18,11 @@ public static class GridNodeCollectionService
         Initialize();
         return _gridNodeCollection.GetModelNameByFixedPathType(fixedPathType);
     }
+
+    public static string GetModelNameByInteractablePathType(InteractablePathType interactablePathType)
+    {
+        if (_isReady) return _gridNodeCollection.GetModelNameByInteractablePathType(interactablePathType);
+        Initialize();
+        return _gridNodeCollection.GetModelNameByInteractablePathType(interactablePathType);
+    }
 }

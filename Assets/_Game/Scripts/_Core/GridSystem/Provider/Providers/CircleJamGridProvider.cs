@@ -50,6 +50,11 @@ public class CircleJamGridProvider : IGridProvider
                         gridNodeData.GridType = GridType.FixedPath;
                         gridNodeData.FixedPathType = FixedPathType.Bridge;
                     }
+                    else if(j == 11)
+                    {
+                        gridNodeData.GridType = GridType.InteractablePath;
+                        gridNodeData.InteractablePathType = InteractablePathType.Sandal;
+                    }
                     else
                     {
                         gridNodeData.GridType = GridType.Empty;
@@ -161,8 +166,13 @@ public class CircleJamGridProvider : IGridProvider
         int i = 0;
         foreach (var circle in _circleGridsParentById.Values)
         {
+            if(circle.IsCircleWater)
+            {
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"WaterLevel_{i+1}", circle.CircleTransform.GetChild(0));
+            }
             foreach (var grid in circle.GridNodes)
             {
+                grid.ResetGrid();
                 GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"GridLevel_{i+1}", grid);
             }
             i++;

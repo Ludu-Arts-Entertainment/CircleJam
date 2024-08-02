@@ -15,6 +15,7 @@ public class GridNode : MonoBehaviour
     private GridNodeData _gridNodeData;
 
     private MeshRenderer meshRenderer;
+    private Transform model;
     public void Initialize(GridNodeData gridNodeData)
     {
         character = null;
@@ -22,7 +23,7 @@ public class GridNode : MonoBehaviour
 
         if(_gridNodeData.GridType == GridType.Normal)
         {
-            var model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>($"GridModel_{gridNodeData.CircleLevel + 1}", parent: transform);
+            model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>($"GridModel_{gridNodeData.CircleLevel + 1}", parent: transform);
             model.localPosition = Vector3.zero;
             model.localScale = Vector3.one;
             meshRenderer = model.GetComponentInChildren<MeshRenderer>();
@@ -30,9 +31,15 @@ public class GridNode : MonoBehaviour
         if(_gridNodeData.GridType == GridType.FixedPath)
         {
             var modelName = GridNodeCollectionService.GetModelNameByFixedPathType(_gridNodeData.FixedPathType);
-            var model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>(modelName, parent: transform);
+            model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>(modelName, parent: transform);
             model.transform.localPosition = collider.bounds.center;
             model.transform.localPosition = new Vector3(model.transform.localPosition.x, 0.5f, model.transform.localPosition.z);
+        }
+        if(_gridNodeData.GridType == GridType.InteractablePath)
+        {
+            var modelName = GridNodeCollectionService.GetModelNameByInteractablePathType(_gridNodeData.InteractablePathType);
+            model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>(modelName, parent: transform);
+            model.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -69,9 +76,20 @@ public class GridNode : MonoBehaviour
 
     public void ResetGrid()
     {
-        if(_gridNodeData.HaveCharacter)
+        if(_gridNodeData != null)
         {
-            GameInstaller.Instance.SystemLocator.PoolManager.Destroy("Character", character);
+            if(_gridNodeData.GridType == GridType.Normal)
+            {
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"GridModel_{_gridNodeData.CircleLevel + 1}", model);
+            }
+            else if(_gridNodeData.GridType == GridType.FixedPath)
+            {
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy(GridNodeCollectionService.GetModelNameByFixedPathType(_gridNodeData.FixedPathType), model);
+            }
+            else if(_gridNodeData.GridType == GridType.InteractablePath)
+            {
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy(GridNodeCollectionService.GetModelNameByInteractablePathType(_gridNodeData.InteractablePathType), model);
+            }
         }
     }
 }
@@ -80,6 +98,7 @@ public class GridNodeData
 {
     public GridType GridType;
     public FixedPathType FixedPathType;
+    public InteractablePathType InteractablePathType;
     public int CircleLevel;
     public int GridIdx;
     public bool HaveCharacter;
@@ -91,9 +110,15 @@ public enum GridType
     Empty,
     Normal,
     FixedPath,
+    InteractablePath,
 }
 
 public enum FixedPathType
 {
     Bridge,
+}
+
+public enum InteractablePathType
+{
+    Sandal,
 }

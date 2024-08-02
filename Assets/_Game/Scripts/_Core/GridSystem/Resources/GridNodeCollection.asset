@@ -15,3 +15,6 @@ MonoBehaviour:
   FixedPathDatas:
   - FixedPathType: 0
     ModelName: Bridge
+  InteractablePathDatas:
+  - InteractablePathType: 0
+    ModelName: Sandal
