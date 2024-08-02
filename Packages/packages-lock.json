@@ -50,6 +50,15 @@
       },
       "hash": "9dd1c7ac945c9c9f4a53922446769b474957ea5a"
     },
+    "com.ldk.gameanalytics": {
+      "version": "https://github.com/Ludu-Arts-Entertainment/com.ldk.gameanalytics.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.177"
+      },
+      "hash": "d1cfea0a80be7421db2e0b88dd86be5620ac6a52"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
