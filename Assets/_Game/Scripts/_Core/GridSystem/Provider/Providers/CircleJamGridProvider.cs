@@ -18,18 +18,18 @@ public class CircleJamGridProvider : IGridProvider
         onReady?.Invoke();
     }
 
-    private GridParent gridParentObject;
+    private CircleParent circleParentObject;
     public void CreateGrid(int circleCount, Transform parent)
     {
-        if(gridParentObject == null)
+        if(circleParentObject == null)
         {
-            gridParentObject = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridParent>("GridParent", parent: parent);
+            circleParentObject = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<CircleParent>("CircleParent", parent: parent);
         }
 
         for (int i = 0; i < circleCount; i++)
         {
             var circleData = new CircleData();
-            circleData.CircleTransform = gridParentObject.GridCircleParents[i];
+            circleData.Circle = circleParentObject.CircleParents[i];
             circleData.GridNodes = new List<GridNode>();
 
             _circleIdxs.Add(i, new List<int>());
@@ -37,27 +37,30 @@ public class CircleJamGridProvider : IGridProvider
             if(i == 1)
             {
                 circleData.IsCircleWater = true;
-                var waterObject = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>($"WaterLevel_{i+1}", parent: circleData.CircleTransform);
+                var waterObject = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>($"WaterLevel_{i+1}", parent: circleData.Circle.NotRotateTransform);
                 waterObject.localPosition = Vector3.zero;
 
                 for (int j = 0; j < ONE_CIRCLE_GRID_COUNT; j++)
                 {
-                    var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}", parent: circleData.CircleTransform);
+                    var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}");
                     var gridNodeData = new GridNodeData();
                     
                     if(j == 8)
                     {
                         gridNodeData.GridType = GridType.FixedPath;
                         gridNodeData.FixedPathType = FixedPathType.Bridge;
+                        grid.transform.parent = circleData.Circle.NotRotateTransform;
                     }
                     else if(j == 11)
                     {
                         gridNodeData.GridType = GridType.InteractablePath;
                         gridNodeData.InteractablePathType = InteractablePathType.Sandal;
+                        grid.transform.parent = circleData.Circle.RotateTransform;
                     }
                     else
                     {
                         gridNodeData.GridType = GridType.Empty;
+                        grid.transform.parent = circleData.Circle.NotRotateTransform;
                     }
                     gridNodeData.CircleLevel = i;
                     gridNodeData.GridIdx = j;
@@ -74,7 +77,7 @@ public class CircleJamGridProvider : IGridProvider
 
                 for (int j = 0; j < ONE_CIRCLE_GRID_COUNT; j++)
                 {
-                    var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}", parent: circleData.CircleTransform);
+                    var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}", parent: circleData.Circle.RotateTransform);
                     var gridNodeData = new GridNodeData();
                     gridNodeData.GridType = GridType.Normal;
                     gridNodeData.CircleLevel = i;
@@ -87,12 +90,12 @@ public class CircleJamGridProvider : IGridProvider
 
                     if((i == 0 && j == 3) || (i == 2 && j == 11) || (i == 3 && j == 5))
                     {
-                        grid.CreateCharacter(GoalColor.Blue, gridParentObject.DoorTransform);
+                        grid.CreateCharacter(GoalColor.Blue, circleParentObject.DoorTransform);
                     }
 
                     if((i == 0 && j == 1) || (i == 2 && j == 3))
                     {
-                        grid.CreateCharacter(GoalColor.Green, gridParentObject.DoorTransform);
+                        grid.CreateCharacter(GoalColor.Green, circleParentObject.DoorTransform);
                     }
                 }
             }
@@ -104,7 +107,7 @@ public class CircleJamGridProvider : IGridProvider
     {
         if(!_circleGridsParentById.ContainsKey(circleIdx)) return;
 
-        _circleGridsParentById[circleIdx].CircleTransform.Rotate(Vector3.up, angle, Space.World);
+        _circleGridsParentById[circleIdx].Circle.RotateTransform.Rotate(Vector3.up, angle, Space.World);
     }
 
     public void StartRotateCircle(int circleIdx)
@@ -122,7 +125,7 @@ public class CircleJamGridProvider : IGridProvider
         
         var angle = (360 / ONE_CIRCLE_GRID_COUNT);
 
-        _circleGridsParentById[circleIdx].CircleTransform.rotation = Quaternion.Euler(0, Mathf.Round(_circleGridsParentById[circleIdx].CircleTransform.eulerAngles.y / angle) * angle, 0);
+        _circleGridsParentById[circleIdx].Circle.RotateTransform.rotation = Quaternion.Euler(0, Mathf.Round(_circleGridsParentById[circleIdx].Circle.RotateTransform.eulerAngles.y / angle) * angle, 0);
 
         foreach (var grid in _circleGridsParentById[circleIdx].GridNodes)
         {
@@ -153,9 +156,23 @@ public class CircleJamGridProvider : IGridProvider
                     .ToList();
         }
 
+        //_circleIdxs listesinde _circleGridsParentById[circleIdx].GridNodes[i].GridNodeData.GridType Fixed path olanı listeden çıkar
+        var coppiedIdx = new List<int>(_circleIdxs[circleIdx]);
+        for (int i = 0; i < _circleIdxs[circleIdx].Count; i++)
+        {
+            var gridType = _circleGridsParentById[circleIdx].GridNodes.FirstOrDefault(x => x.GridNodeData.GridIdx == _circleIdxs[circleIdx][i])?.GridNodeData.GridType;
+            if(gridType == GridType.FixedPath)
+            {
+                coppiedIdx.Remove(_circleIdxs[circleIdx][i]);
+            }
+        }
+
+        var index = 0;
         for(int i = 0; i < _circleGridsParentById[circleIdx].GridNodes.Count; i++)
         {
-            _circleGridsParentById[circleIdx].GridNodes[i].UpdateGridIdx(_circleIdxs[circleIdx][i]);
+            if(_circleGridsParentById[circleIdx].GridNodes[i].GridNodeData.GridType == GridType.FixedPath) continue;
+            _circleGridsParentById[circleIdx].GridNodes[i].UpdateGridIdx(coppiedIdx[index]);
+            index++;
         }
 
         GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GridUpdated());
@@ -168,7 +185,7 @@ public class CircleJamGridProvider : IGridProvider
         {
             if(circle.IsCircleWater)
             {
-                GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"WaterLevel_{i+1}", circle.CircleTransform.GetChild(0));
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"WaterLevel_{i+1}", circle.Circle.NotRotateTransform.GetChild(0));
             }
             foreach (var grid in circle.GridNodes)
             {
@@ -180,17 +197,28 @@ public class CircleJamGridProvider : IGridProvider
 
         foreach (var circleGrid in _circleGridsParentById.Values)
         {
-            circleGrid.CircleTransform.rotation = Quaternion.Euler(0, 0, 0);
+            circleGrid.Circle.RotateTransform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
         _circleGridsParentById.Clear();
         _circleIdxs.Clear();
     }
 
+    public bool IsObstacle(int circleIdx, int gridIdx)
+    {
+        if(!_circleGridsParentById.ContainsKey(circleIdx)) return false;
+
+        var gridType = _circleGridsParentById[circleIdx].GridNodes[gridIdx].GridNodeData.GridType;
+        if(gridType == GridType.FixedPath) return true;
+        else return false;
+    }
+
     public bool CheckAnyObstacle(int circleIdx, int gridIdx)
     {
         if(!_circleGridsParentById.ContainsKey(circleIdx)) return false;
-        if(_circleGridsParentById[circleIdx].GridNodes[gridIdx].GridNodeData.GridType == GridType.Empty) return true;
+        
+        var gridType = _circleGridsParentById[circleIdx].GridNodes.FirstOrDefault(x => x.GridNodeData.GridIdx == gridIdx)?.GridNodeData.GridType;
+        if(gridType == GridType.Empty) return true;
         else return false;
     }
 }
@@ -204,7 +232,7 @@ public partial class Events
 
 public class CircleData
 {
-    public Transform CircleTransform;
+    public Circle Circle;
     public bool IsCircleWater;
     public List<GridNode> GridNodes;
 }

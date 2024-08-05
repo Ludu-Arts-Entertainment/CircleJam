@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GridNode : MonoBehaviour
@@ -13,6 +14,7 @@ public class GridNode : MonoBehaviour
     
     public GridNodeData GridNodeData => _gridNodeData;
     private GridNodeData _gridNodeData;
+    private int GridIdx;
 
     private MeshRenderer meshRenderer;
     private Transform model;
@@ -20,6 +22,7 @@ public class GridNode : MonoBehaviour
     {
         character = null;
         _gridNodeData = gridNodeData;
+        GridIdx = _gridNodeData.GridIdx;
 
         if(_gridNodeData.GridType == GridType.Normal)
         {
@@ -46,6 +49,7 @@ public class GridNode : MonoBehaviour
     public void UpdateGridIdx(int gridIdx)
     {
         _gridNodeData.GridIdx = gridIdx;
+        GridIdx = gridIdx;
     }
 
     public void CreateCharacter(GoalColor color, Transform lookTarget)
@@ -91,6 +95,11 @@ public class GridNode : MonoBehaviour
                 GameInstaller.Instance.SystemLocator.PoolManager.Destroy(GridNodeCollectionService.GetModelNameByInteractablePathType(_gridNodeData.InteractablePathType), model);
             }
         }
+    }
+
+    public bool IsCanRotate()
+    {
+        return _gridNodeData.GridType != GridType.FixedPath && _gridNodeData.GridType != GridType.Empty;
     }
 }
 

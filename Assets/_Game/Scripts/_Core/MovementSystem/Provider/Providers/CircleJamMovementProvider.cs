@@ -57,7 +57,7 @@ public class CircleJamMovementProvider : IMovementProvider
 
         if(hasHit)
         {
-            if(hit.collider.TryGetComponent(out GridNode gridNode) && gridNode.GridNodeData.GridType == GridType.Normal)
+            if(hit.collider.TryGetComponent(out GridNode gridNode) && gridNode.IsCanRotate())
             {
                 _selectedGridNode = gridNode;
             }
