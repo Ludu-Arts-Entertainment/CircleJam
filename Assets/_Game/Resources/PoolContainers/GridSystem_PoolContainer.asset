@@ -81,3 +81,19 @@ MonoBehaviour:
     Prefab: {fileID: 8643992986622061361, guid: 1e4647878bc1f47eeb1c86f80fabca44, type: 3}
     InitialCount: 0
     Tag: 0
+  - Id: Fence_1
+    Prefab: {fileID: 8480123953575019197, guid: de5e1fc7b2b6e440e9d7a05d59a7c356, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: Fence_2
+    Prefab: {fileID: 8480123953575019197, guid: 745c4d7c601ab4a9abf06642b8b6a352, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: Fence_3
+    Prefab: {fileID: 8480123953575019197, guid: 49c1ff5a21c0c4ab3876be50e30afd37, type: 3}
+    InitialCount: 0
+    Tag: 0
+  - Id: Fence_4
+    Prefab: {fileID: 8480123953575019197, guid: 7df145f0e82b749baae97c1d121cc3a0, type: 3}
+    InitialCount: 0
+    Tag: 0
