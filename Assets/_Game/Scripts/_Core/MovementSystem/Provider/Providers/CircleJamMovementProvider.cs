@@ -88,7 +88,10 @@ public class CircleJamMovementProvider : IMovementProvider
         bool hasHit = Physics.Raycast(ray, out RaycastHit hitPoint, Mathf.Infinity, LayerMask.GetMask("Ground"));
 
         if(!hasHit) return;
-
+        
+        
+        if(GameInstaller.Instance.SystemLocator.GridManager.CheckRotateObstacle(_selectedGridNode.GridNodeData.CircleLevel, _selectedGridNode.GridNodeData.GridIdx, totalAngle)) return;
+        
         Vector3 currentDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
         var angle = Vector3.SignedAngle(initialDirection, currentDirection, Vector3.up);
         totalAngle += angle;

@@ -12,6 +12,9 @@ public class GridNodeCollection : ScriptableObject
     [Header("Interactable Path")]
     public List<InteractablePathData> InteractablePathDatas;
 
+    [Header("Fixed Obstacle")]
+    public List<FixedObstacleData> FixedObstacleDatas;
+
     public string GetModelNameByFixedPathType(FixedPathType fixedPathType)
     {
         foreach (var fixedPathData in FixedPathDatas)
@@ -37,6 +40,19 @@ public class GridNodeCollection : ScriptableObject
 
         return string.Empty;
     }
+
+    public string GetModelNameByFixedObstacleType(FixedObstacleType fixedObstacleType)
+    {
+        foreach (var fixedObstacleData in FixedObstacleDatas)
+        {
+            if (fixedObstacleData.FixedObstacleType == fixedObstacleType)
+            {
+                return fixedObstacleData.ModelName;
+            }
+        }
+
+        return string.Empty;
+    }
 }
 
 [Serializable]
@@ -50,5 +66,12 @@ public class FixedPathData
 public class InteractablePathData
 {
     public InteractablePathType InteractablePathType;
+    public string ModelName;
+}
+
+[Serializable]
+public class FixedObstacleData
+{
+    public FixedObstacleType FixedObstacleType;
     public string ModelName;
 }

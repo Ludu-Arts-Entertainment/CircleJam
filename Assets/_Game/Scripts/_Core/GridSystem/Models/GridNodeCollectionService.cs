@@ -25,4 +25,11 @@ public static class GridNodeCollectionService
         Initialize();
         return _gridNodeCollection.GetModelNameByInteractablePathType(interactablePathType);
     }
+
+    public static string GetModelNameByFixedObstacleType(FixedObstacleType fixedObstacleType)
+    {
+        if (_isReady) return _gridNodeCollection.GetModelNameByFixedObstacleType(fixedObstacleType);
+        Initialize();
+        return _gridNodeCollection.GetModelNameByFixedObstacleType(fixedObstacleType);
+    }
 }

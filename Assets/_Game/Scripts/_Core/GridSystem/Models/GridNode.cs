@@ -17,8 +17,8 @@ public class GridNode : MonoBehaviour
     private int GridIdx;
 
     private MeshRenderer meshRenderer;
-    private Transform model;
-    public void Initialize(GridNodeData gridNodeData)
+    private Transform model, model2;
+    public void Initialize(CircleData circleData, GridNodeData gridNodeData)
     {
         character = null;
         _gridNodeData = gridNodeData;
@@ -43,6 +43,18 @@ public class GridNode : MonoBehaviour
             var modelName = GridNodeCollectionService.GetModelNameByInteractablePathType(_gridNodeData.InteractablePathType);
             model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>(modelName, parent: transform);
             model.transform.localPosition = Vector3.zero;
+        }
+        if(_gridNodeData.GridType == GridType.FixedObstacle)
+        {
+            model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>($"GridModel_{gridNodeData.CircleLevel + 1}", parent: transform);
+            model.localPosition = Vector3.zero;
+            model.localScale = Vector3.one;
+            meshRenderer = model.GetComponentInChildren<MeshRenderer>();
+
+            var model2Name = GridNodeCollectionService.GetModelNameByFixedObstacleType(_gridNodeData.FixedObstacleType);
+            model2 = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>($"{model2Name}_{gridNodeData.CircleLevel + 1}", parent: circleData.Circle.NotRotateTransform);
+            model2.rotation = transform.rotation;
+            model2.localPosition = Vector3.zero;
         }
     }
 
@@ -94,6 +106,11 @@ public class GridNode : MonoBehaviour
             {
                 GameInstaller.Instance.SystemLocator.PoolManager.Destroy(GridNodeCollectionService.GetModelNameByInteractablePathType(_gridNodeData.InteractablePathType), model);
             }
+            else if(_gridNodeData.GridType == GridType.FixedObstacle)
+            {
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"GridModel_{_gridNodeData.CircleLevel + 1}", model);
+                GameInstaller.Instance.SystemLocator.PoolManager.Destroy($"{GridNodeCollectionService.GetModelNameByFixedObstacleType(_gridNodeData.FixedObstacleType)}_{_gridNodeData.CircleLevel + 1}", model2);
+            }
         }
     }
 
@@ -108,6 +125,7 @@ public class GridNodeData
     public GridType GridType;
     public FixedPathType FixedPathType;
     public InteractablePathType InteractablePathType;
+    public FixedObstacleType FixedObstacleType;
     public int CircleLevel;
     public int GridIdx;
     public bool HaveCharacter;
@@ -120,6 +138,7 @@ public enum GridType
     Normal,
     FixedPath,
     InteractablePath,
+    FixedObstacle,
 }
 
 public enum FixedPathType
@@ -130,4 +149,9 @@ public enum FixedPathType
 public enum InteractablePathType
 {
     Sandal,
+}
+
+public enum FixedObstacleType
+{
+    Fence,
 }
