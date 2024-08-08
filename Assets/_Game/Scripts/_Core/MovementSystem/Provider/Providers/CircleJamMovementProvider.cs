@@ -89,11 +89,25 @@ public class CircleJamMovementProvider : IMovementProvider
 
         if(!hasHit) return;
         
-        
-        if(GameInstaller.Instance.SystemLocator.GridManager.CheckRotateObstacle(_selectedGridNode.GridNodeData.CircleLevel, _selectedGridNode.GridNodeData.GridIdx, totalAngle)) return;
-        
         Vector3 currentDirection = (hitPoint.point - _selectedGridNode.transform.position).normalized;
         var angle = Vector3.SignedAngle(initialDirection, currentDirection, Vector3.up);
+
+        var beforePos = _selectedGridNode.CircleData.Circle.RotateTransform.rotation.y;
+        var afterPos = _selectedGridNode.CircleData.Circle.RotateTransform.rotation.y + angle;
+        float angleDifference = Mathf.DeltaAngle(beforePos, afterPos);
+        if(angle < 0)
+        {
+            Debug.Log("NotClockwise");
+        }
+        else if (angle > 0)
+        {
+            Debug.Log("Clockwise");
+        }
+        if(GameInstaller.Instance.SystemLocator.GridManager.CheckRotateObstacle(_selectedGridNode.GridNodeData.CircleLevel, _selectedGridNode.GridNodeData.GridIdx, totalAngle, angleDifference))
+        {
+            return;
+        } 
+        
         totalAngle += angle;
         GameInstaller.Instance.SystemLocator.GridManager.RotateCircle(_selectedGridNode.GridNodeData.CircleLevel, angle);
 

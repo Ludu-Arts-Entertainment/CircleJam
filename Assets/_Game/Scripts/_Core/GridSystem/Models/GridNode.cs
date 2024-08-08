@@ -18,10 +18,14 @@ public class GridNode : MonoBehaviour
 
     private MeshRenderer meshRenderer;
     private Transform model, model2;
+
+    private CircleData _circleData;
+    public CircleData CircleData => _circleData;
     public void Initialize(CircleData circleData, GridNodeData gridNodeData)
     {
         character = null;
         _gridNodeData = gridNodeData;
+        _circleData = circleData;
         GridIdx = _gridNodeData.GridIdx;
 
         if(_gridNodeData.GridType == GridType.Normal)
@@ -42,7 +46,8 @@ public class GridNode : MonoBehaviour
         {
             var modelName = GridNodeCollectionService.GetModelNameByInteractablePathType(_gridNodeData.InteractablePathType);
             model = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<Transform>(modelName, parent: transform);
-            model.transform.localPosition = Vector3.zero;
+            model.transform.localPosition = collider.bounds.center;
+            model.transform.localPosition = new Vector3(model.transform.localPosition.x, 0.65f, model.transform.localPosition.z);
         }
         if(_gridNodeData.GridType == GridType.FixedObstacle)
         {

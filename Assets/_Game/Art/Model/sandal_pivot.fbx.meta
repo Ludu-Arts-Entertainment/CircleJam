@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 92384c3a42a017d4eb5f603268afc5c2
+guid: 12b1c30eaec7348f1b66a955d2567ae9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,7 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert1
+      name: environment_atlas
     second: {fileID: 2100000, guid: ddb5af846757b934fbdbf1b4e91f1fc1, type: 2}
   materials:
     materialImportMode: 2

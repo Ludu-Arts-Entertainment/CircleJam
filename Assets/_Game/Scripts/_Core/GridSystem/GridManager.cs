@@ -45,9 +45,9 @@ public class GridManager : IManager
         return _gridProvider.CheckAnyObstacle(circleIdx, gridIdx);
     }
 
-    public bool CheckRotateObstacle(int circleIdx, int gridIdx, float totalAngle)
+    public bool CheckRotateObstacle(int circleIdx, int gridIdx, float totalAngle, float angleDifference)
     {
-        return _gridProvider.CheckRotateObstacle(circleIdx, gridIdx, totalAngle);
+        return _gridProvider.CheckRotateObstacle(circleIdx, gridIdx, totalAngle, angleDifference);
     }
 
     public void ResetGrid()
