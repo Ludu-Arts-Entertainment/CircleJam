@@ -115,6 +115,51 @@ public class CircleJamGridProvider : IGridProvider
         }
     }
 
+    public void CreateGrid(CircleJamLevelData levelData, Transform parent)
+    {
+        if(circleParentObject == null)
+        {
+            circleParentObject = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<CircleParent>("CircleParent", parent: parent);
+        }
+
+        for(int i = 0; i < levelData.CircleDataList.Count; i++)
+        {
+            var circleData = new CircleData();
+            circleData.Circle = circleParentObject.CircleParents[i];
+            circleData.GridNodes = new List<GridNode>();
+            
+            _circleIdxs.Add(i, new List<int>());
+            circleData.IsCircleWater = false;
+
+            var gridDatas = levelData.CircleDataList[i].GridData;
+            for(int j = 0; j < ONE_CIRCLE_GRID_COUNT; j++)
+            {
+                var gridNodeData = new GridNodeData();
+                gridNodeData.GridType = gridDatas[j].gridType;
+                gridNodeData.FixedObstacleType = gridDatas[j].fixedObstacleType;
+                gridNodeData.FixedPathType = gridDatas[j].fixedPathType;
+                gridNodeData.InteractablePathType = gridDatas[j].interactablePathType;
+                gridNodeData.CircleLevel = i;
+                gridNodeData.GridIdx = j;
+
+                var grid = GameInstaller.Instance.SystemLocator.PoolManager.Instantiate<GridNode>($"GridLevel_{i+1}", parent: circleData.Circle.RotateTransform);           
+                grid.transform.localPosition = Vector3.zero;
+                grid.transform.localRotation = Quaternion.Euler(0, j * (360 / ONE_CIRCLE_GRID_COUNT), 0);
+                grid.Initialize(circleData, gridNodeData);
+
+                circleData.GridNodes.Add(grid);
+                _circleIdxs[i].Add(j);
+
+                if(gridDatas[j].hasCharacter)
+                {
+                    grid.CreateCharacter(gridDatas[j].characterColor, circleParentObject.DoorTransform);
+                }
+            }
+
+            _circleGridsParentById.Add(i, circleData);
+        }
+    }
+
     public void RotateCircle(int circleIdx, float angle)
     {
         if(!_circleGridsParentById.ContainsKey(circleIdx)) return;

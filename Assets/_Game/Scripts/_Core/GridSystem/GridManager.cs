@@ -25,6 +25,11 @@ public class GridManager : IManager
         _gridProvider.CreateGrid(circleCount, parent);
     }
 
+    public void CreateGrid(CircleJamLevelData levelData, Transform parent)
+    {
+        _gridProvider.CreateGrid(levelData, parent);
+    }
+
     public void StartRotateCircle(int circleIdx)
     {
         _gridProvider.StartRotateCircle(circleIdx);

@@ -60,6 +60,7 @@ public class PrefabBaseLevelProvider : ILevelProvider
         _levelController = _systemLocator.PoolManager.Instantiate<LevelController>(((PrefabBaseLevelData)CurrentLevelData).PrefabPoolId,
             Vector3.zero,
             Quaternion.identity, _levelRoot);
+        _levelController.LoadLevel((CurrentLevelData as PrefabBaseLevelData).LevelData);
         _systemLocator.EventManager.Trigger(new Events.OnLevelLoaded(levelIndex));
     }
 

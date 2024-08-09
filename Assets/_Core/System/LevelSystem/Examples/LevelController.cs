@@ -8,7 +8,12 @@ public class LevelController : MonoBehaviour, IPoolObject
 
     public void OnSpawned()
     {
-        GameInstaller.Instance.SystemLocator.GridManager.CreateGrid(4, gridParent);
+        
+    }
+
+    public void LoadLevel(CircleJamLevelData circleJamLevelData)
+    {
+        GameInstaller.Instance.SystemLocator.GridManager.CreateGrid(circleJamLevelData, gridParent);
         GameInstaller.Instance.SystemLocator.GoalManager.UpdateLeveledGoal();
         GameInstaller.Instance.SystemLocator.EventManager.Trigger(new Events.GoalUpdated(GameInstaller.Instance.SystemLocator.GoalManager.CurrentGoalCount, false));
     }

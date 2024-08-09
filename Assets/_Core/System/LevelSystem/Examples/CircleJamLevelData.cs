@@ -1,30 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class CircleJamLevelData : MonoBehaviour
+[CreateAssetMenu(fileName = "CircleJamLevelData", menuName = "ScriptableObjects/CircleJamLevelData", order = 1)]
+public class CircleJamLevelData : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<LevelCircleData> CircleDataList = new List<LevelCircleData>();
 }
 
+[Serializable]
 public class LevelGridData
 {
     public GridType gridType;
-    public FixedPathType fixedPathType;
-    public InteractablePathType interactablePathType;
-    public FixedObstacleType fixedObstacleType;
+    [ShowIf("gridType", GridType.FixedPath)] public FixedPathType fixedPathType;
+    [ShowIf("gridType", GridType.InteractablePath)] public InteractablePathType interactablePathType;
+    [ShowIf("gridType", GridType.FixedObstacle)] public FixedObstacleType fixedObstacleType;
     public bool hasCharacter;
-    public GoalColor characterColor;
+    [ShowIf("hasCharacter")] public GoalColor characterColor;
 
     public void Reset()
     {
@@ -32,4 +26,11 @@ public class LevelGridData
         hasCharacter = false;
         characterColor = GoalColor.None;
     }
+}
+
+[Serializable]
+public class LevelCircleData
+{
+    public int CircleIndex;
+    public List<LevelGridData> GridData;
 }
