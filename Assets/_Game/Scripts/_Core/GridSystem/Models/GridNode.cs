@@ -137,6 +137,14 @@ public class GridNodeData
     public GoalColor CharacterColor;
 }
 
+public class FixedNodeData
+{
+    public GridType GridType;
+    public FixedObstacleType FixedObstacleType;
+    public int CircleLevel;
+    public int GridIdx;
+}
+
 public enum GridType
 {
     Empty,

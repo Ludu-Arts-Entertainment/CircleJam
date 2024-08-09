@@ -78,9 +78,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8110c3688f5a34c10a6244401ae02851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleLevel: 4
   collider: {fileID: 8155265978391937626}
   pivotPoint: {fileID: 3049059557267022007}
   gridObj: {fileID: 0}
+  gridData:
+    gridType: 0
+    fixedPathType: 0
+    interactablePathType: 0
+    fixedObstacleType: 0
+    hasCharacter: 0
+    characterColor: 0
 --- !u!64 &8155265978391937626
 MeshCollider:
   m_ObjectHideFlags: 0

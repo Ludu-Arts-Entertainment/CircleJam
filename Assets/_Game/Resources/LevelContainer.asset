@@ -17,3 +17,7 @@ MonoBehaviour:
     Name: Level 0
     PrefabPoolId: Level-0
     LevelData: {fileID: 11400000, guid: 9e3f2b4ae7063463b950b4dc8b2f51c5, type: 2}
+  - _index: 1
+    Name: Level 1
+    PrefabPoolId: Level-0
+    LevelData: {fileID: 11400000, guid: 769e0cfd3f53d4b09a54dc7c1f6dd5fd, type: 2}

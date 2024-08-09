@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-public class GridObjectEditor : MonoBehaviour
+public class GridObjectEditor : SerializedMonoBehaviour
 {
-   public void Remove()
+    public virtual void Remove()
     {
         DestroyImmediate(gameObject);
     }

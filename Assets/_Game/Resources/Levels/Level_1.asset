@@ -1,0 +1,312 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a63ce0e641cf437dbf89f086bda8668, type: 3}
+  m_Name: Level_1
+  m_EditorClassIdentifier: 
+  goalColorsOrder: 02000000
+  CircleDataList:
+  - CircleIndex: 0
+    GridData:
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 1
+      characterColor: 2
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+  - CircleIndex: 1
+    GridData:
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 1
+      characterColor: 2
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+  - CircleIndex: 2
+    GridData:
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 4
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 1
+      characterColor: 2
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+  - CircleIndex: 3
+    GridData:
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 1
+      characterColor: 2
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0
+    - gridType: 1
+      fixedPathType: 0
+      interactablePathType: 0
+      fixedObstacleType: 0
+      hasCharacter: 0
+      characterColor: 0

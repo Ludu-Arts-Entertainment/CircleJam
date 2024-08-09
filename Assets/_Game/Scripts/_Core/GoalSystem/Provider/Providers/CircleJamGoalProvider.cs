@@ -68,7 +68,7 @@ public class CircleJamGoalProvider : IGoalProvider
             foreach(var character in characters)
             {
                 var gridNodeData = character.CurrentGridNode.GridNodeData;
-                if((gridNodeData.CircleLevel > 0 && _systemLocator.GridManager.CheckAnyObstacle(gridNodeData.CircleLevel - 1, idx)) 
+                if((gridNodeData.CircleLevel > 0 && (_systemLocator.GridManager.CheckAnyObstacle(gridNodeData.CircleLevel - 1, idx))) 
                     || gridNodeData.GridIdx != idx)
                 {
                     goalColors.Remove(character.Color); 

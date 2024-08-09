@@ -127,6 +127,7 @@ public class CircleJamGridProvider : IGridProvider
             var circleData = new CircleData();
             circleData.Circle = circleParentObject.CircleParents[i];
             circleData.GridNodes = new List<GridNode>();
+            circleData.FixedNodeDatas = new List<FixedNodeData>();
             
             _circleIdxs.Add(i, new List<int>());
             circleData.IsCircleWater = false;
@@ -153,6 +154,16 @@ public class CircleJamGridProvider : IGridProvider
                 if(gridDatas[j].hasCharacter)
                 {
                     grid.CreateCharacter(gridDatas[j].characterColor, circleParentObject.DoorTransform);
+                }
+
+                if(gridDatas[j].gridType == GridType.FixedObstacle)
+                {
+                    var fixedNodeData = new FixedNodeData();
+                    fixedNodeData.CircleLevel = i;
+                    fixedNodeData.GridIdx = j;
+                    fixedNodeData.GridType = gridDatas[j].gridType;
+                    fixedNodeData.FixedObstacleType = gridDatas[j].fixedObstacleType;
+                    circleData.FixedNodeDatas.Add(fixedNodeData);
                 }
             }
 
@@ -218,7 +229,7 @@ public class CircleJamGridProvider : IGridProvider
         for (int i = 0; i < _circleIdxs[circleIdx].Count; i++)
         {
             var gridType = _circleGridsParentById[circleIdx].GridNodes.FirstOrDefault(x => x.GridNodeData.GridIdx == _circleIdxs[circleIdx][i])?.GridNodeData.GridType;
-            if(gridType == GridType.FixedPath || gridType == GridType.FixedObstacle)
+            if(gridType == GridType.FixedPath)
             {
                 coppiedIdx.Remove(_circleIdxs[circleIdx][i]);
             }
@@ -228,7 +239,7 @@ public class CircleJamGridProvider : IGridProvider
         for(int i = 0; i < _circleGridsParentById[circleIdx].GridNodes.Count; i++)
         {
             var gridType = _circleGridsParentById[circleIdx].GridNodes[i].GridNodeData.GridType;
-            if(gridType == GridType.FixedPath || gridType == GridType.FixedObstacle) continue;
+            if(gridType == GridType.FixedPath) continue;
             _circleGridsParentById[circleIdx].GridNodes[i].UpdateGridIdx(coppiedIdx[index]);
             index++;
         }
@@ -267,7 +278,11 @@ public class CircleJamGridProvider : IGridProvider
         if(!_circleGridsParentById.ContainsKey(circleIdx)) return false;
         
         var gridType = _circleGridsParentById[circleIdx].GridNodes.FirstOrDefault(x => x.GridNodeData.GridIdx == gridIdx)?.GridNodeData.GridType;
-        if(gridType == GridType.Empty || gridType == GridType.FixedObstacle) return true;
+        if(gridType == GridType.Empty) return true;
+
+        var fixedGridType = _circleGridsParentById[circleIdx].FixedNodeDatas.FirstOrDefault(x => x.GridIdx == gridIdx)?.GridType;
+        if(fixedGridType == GridType.FixedObstacle) return true;
+
         else return false;
     }
 
@@ -341,4 +356,5 @@ public class CircleData
     public Circle Circle;
     public bool IsCircleWater;
     public List<GridNode> GridNodes;
+    public List<FixedNodeData> FixedNodeDatas;
 }
