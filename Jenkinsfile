@@ -40,22 +40,22 @@ pipeline {
                     
                     if(PLATFORM == "iOS"){
                         if(ENVIRONMENT == "Release"){
-                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -serial ${UNITY_SERIAL} -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildiOSProd ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
+                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildiOSProd ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
                         }else if(ENVIRONMENT == "Main"){
-                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -serial ${UNITY_SERIAL} -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildiOSMain ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
+                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildiOSMain ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
                         }else {
-                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -serial ${UNITY_SERIAL} -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildiOSDev ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
+                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildiOSDev ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
                         }
                     }else {
                         sh '''#!/bin/bash
                                 rm -rf ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}/
                         '''
                         if(ENVIRONMENT == "Release"){
-                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -serial ${UNITY_SERIAL} -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildAndroidProd ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
+                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildAndroidProd ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
                         }else if(ENVIRONMENT == "Main"){
-                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -serial ${UNITY_SERIAL} -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildAndroidMain ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
+                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildAndroidMain ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
                         }else {
-                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -serial ${UNITY_SERIAL} -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildAndroidDev ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
+                            buildCommand = "${unityExecutable} -nographics -buildTarget ${PLATFORM} -quit -batchmode -username ${UNITY_USERNAME} -password ${UNITY_PASSWORD} -projectPath -executeMethod BuildHelper.BuildAndroidDev ${JOB_NAME}-${BUILD_NUMBER} ${WORKSPACE}/Builds/${PLATFORM}/${ENVIRONMENT}/${BUILD_NUMBER}"
                         }
                     }
 
