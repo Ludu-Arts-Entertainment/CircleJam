@@ -8,6 +8,7 @@ using UnityEngine;
 public class LevelCreatorHelper : MonoBehaviour
 {
     private GridMap _gridMap;
+    private LevelCreator _levelCreator;
     public int levelIndex;
     public CircleJamLevelData currentLevelData;
 
@@ -15,6 +16,8 @@ public class LevelCreatorHelper : MonoBehaviour
     public void Save()
     {
         _gridMap ??= FindObjectOfType<GridMap>();
+        _levelCreator ??= GetComponent<LevelCreator>();
+
         currentLevelData = Resources.Load<CircleJamLevelData>($"Levels/Level_{levelIndex}");
         if (currentLevelData is null)
         {
@@ -25,7 +28,8 @@ public class LevelCreatorHelper : MonoBehaviour
         EditorUtility.SetDirty(currentLevelData);
 
         currentLevelData.CircleDataList = new List<LevelCircleData>();
-
+        currentLevelData.goalColorsOrder = _levelCreator.goalColorsOrder;
+        
         #region Circle_1
         var circleData_1 = new LevelCircleData();
         circleData_1.CircleIndex = 0;

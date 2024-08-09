@@ -30,8 +30,8 @@ public class GoalManager : IManager
         _goalProvider.Reset();
     }
 
-    public void UpdateLeveledGoal()
+    public void UpdateLeveledGoal(List<GoalColor> goalColorsOrder)
     {
-        _goalProvider.UpdateLeveledGoal();
+        _goalProvider.UpdateLeveledGoal(goalColorsOrder);
     }
 }

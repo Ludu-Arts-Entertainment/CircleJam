@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a63ce0e641cf437dbf89f086bda8668, type: 3}
   m_Name: Level_0
   m_EditorClassIdentifier: 
+  goalColorsOrder: 01000000
   CircleDataList:
   - CircleIndex: 0
     GridData:

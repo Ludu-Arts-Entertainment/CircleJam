@@ -42,11 +42,10 @@ public class CircleJamGoalProvider : IGoalProvider
         onReady?.Invoke();
     }
 
-    public void UpdateLeveledGoal()
+    public void UpdateLeveledGoal(List<GoalColor> goalColorsOrder)
     {
         leveledGoalColors.Clear();
-        leveledGoalColors.Add(GoalColor.Blue);
-        leveledGoalColors.Add(GoalColor.Green);
+        leveledGoalColors.AddRange(goalColorsOrder);
     }
 
     private void OnCharacterCreated(Events.CharacterCreated created)

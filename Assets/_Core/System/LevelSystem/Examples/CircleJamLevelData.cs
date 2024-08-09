@@ -7,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CircleJamLevelData", menuName = "ScriptableObjects/CircleJamLevelData", order = 1)]
 public class CircleJamLevelData : ScriptableObject
 {
+    public List<GoalColor> goalColorsOrder = new List<GoalColor>();
     public List<LevelCircleData> CircleDataList = new List<LevelCircleData>();
 }
 

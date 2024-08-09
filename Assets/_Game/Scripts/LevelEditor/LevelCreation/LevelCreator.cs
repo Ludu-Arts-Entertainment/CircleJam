@@ -10,6 +10,8 @@ public class LevelCreator : MonoBehaviour
     private SceneVisibilityManager sv;
 
     private LevelCreatorDataChooser data;
+    [Header("Goal Color Order")]
+    public List<GoalColor> goalColorsOrder;
 
     [Header("Objects")]
     public CharacterEditor characterPrefab;
@@ -47,7 +49,7 @@ public class LevelCreator : MonoBehaviour
             character.transform.rotation = cellEditor.pivotPoint.rotation;
             
             character.transform.localScale = Vector3.one;
-            character.name = "Player";
+            character.name = "Character";
             cellEditor.gridObj = character.GetComponent<GridObjectEditor>();
         }
         #endregion
