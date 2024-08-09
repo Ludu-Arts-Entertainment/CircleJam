@@ -1,4 +1,4 @@
-using System.Collections;
+/**using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -43,4 +43,4 @@ public class AppleBuildPostProcessor : MonoBehaviour
         manager.WriteToFile();
 #endif
     }
-}
+}*/
