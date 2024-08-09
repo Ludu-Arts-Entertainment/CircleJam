@@ -1,4 +1,4 @@
-app_identifier("com.ludu.holydefence") # The bundle identifier of your app
+app_identifier("com.ludu.circlejam") # The bundle identifier of your app
 apple_id("dilagizembolukbasi@gmail.com") # Your Apple Developer Portal username
 
 itc_team_id("126134933") # App Store Connect Team ID
